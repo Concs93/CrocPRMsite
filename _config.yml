@@ -1,5 +1,18 @@
 title: CrocPRM Patch Notes
 description: Atualizações e downloads do servidor
+
 remote_theme: pages-themes/slate@v0.2.0
 plugins:
   - jekyll-remote-theme
+
+# Jekyll
+markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: rouge
+permalink: /:categories/:title/
+timezone: America/Sao_Paulo
+
+# URL raiz do site de usuário
+url: "https://concs93.github.io"
+baseurl: ""  # importante: vazio no site de usuário
