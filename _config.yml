@@ -1,0 +1,6 @@
+title: CrocPRM Patch Notes
+description: Atualizações e downloads do servidor
+theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-feed

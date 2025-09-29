@@ -1,0 +1,4 @@
+/* Estilização simples */
+.page-content { max-width: 900px; margin: auto; }
+a { text-decoration: none; }
+.site-title, .site-title:visited { font-weight: 700; }
