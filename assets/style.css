@@ -1,4 +1,35 @@
-/* Estilização simples */
-.page-content { max-width: 900px; margin: auto; }
-a { text-decoration: none; }
-.site-title, .site-title:visited { font-weight: 700; }
+/* Força dark no Cayman */
+html { color-scheme: dark; }
+body {
+  background: #0f1115 !important;
+  color: #e5e7eb !important;
+}
+
+/* contêiner central do Cayman */
+.page-header {
+  background: #111827 !important; /* topo */
+  border-bottom: 1px solid #1f2937;
+}
+.project-name, .project-tagline { color: #e5e7eb !important; }
+
+.main-content { color: #e5e7eb; }
+.main-content a { color: #93c5fd; }
+.main-content a:hover { text-decoration: underline; }
+
+/* títulos, legibilidade */
+h1, h2, h3 { letter-spacing: .2px; }
+p, li { line-height: 1.8; font-size: 17px; }
+
+/* tabela/código */
+table { width:100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #2a2f3a; padding: .6rem .7rem; }
+pre, code { background: #1f2937; color: #e5e7eb; border-radius: 8px; }
+
+/* blocos de citação */
+blockquote {
+  border-left: 3px solid #334155;
+  background: #111827;
+  color: #cbd5e1;
+  padding: .6rem 1rem;
+  border-radius: 8px;
+}
