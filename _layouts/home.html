@@ -39,25 +39,26 @@ layout: default
             <div class="step-number">2</div>
             <div class="step-content">
                 <h3>Execute o Cliente</h3>
-                <p>Abra o arquivo baixado e aguarde o servidor iniciar (21:00)</p>
+                <p>Execute o arquivo <code>PRM.exe</code> e aguarde o servidor iniciar (21:00)</p>
             </div>
         </div>
         
         <div class="registration-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h3>Cadastro no Jogo</h3>
-                <p>No jogo, use os comandos:</p>
+                <h3>Cadastro na Tela de Login</h3>
+                <p>Na tela de login, crie um usuário e no final do nome, adicione:</p>
                 <div class="command-examples">
                     <div class="command">
-                        <code>@_M</code>
-                        <span>para criar conta masculina</span>
+                        <code>_M</code>
+                        <span>para conta masculina</span>
                     </div>
                     <div class="command">
-                        <code>@_F</code>
-                        <span>para criar conta feminina</span>
+                        <code>_F</code>
+                        <span>para conta feminina</span>
                     </div>
                 </div>
+                <p class="step-note">Exemplo: <code>MeuUsuario_M</code> ou <code>MinhaUsuario_F</code></p>
             </div>
         </div>
         
@@ -65,7 +66,7 @@ layout: default
             <div class="step-number">4</div>
             <div class="step-content">
                 <h3>Pronto!</h3>
-                <p>Sua conta será criada e você poderá começar a jogar</p>
+                <p>Da próxima vez, não precisa colocar o <code>_M</code> ou <code>_F</code> - só seu usuário e senha!</p>
             </div>
         </div>
     </div>
@@ -74,13 +75,6 @@ layout: default
 <div class="patches-section">
     <h2>📋 Patch Notes</h2>
     <p class="section-description">Clique em um patch para ver os detalhes completos</p>
-    
-    <!-- Countdown também na seção de patches -->
-    <div class="patches-countdown">
-        <div class="countdown-text">📥 Download libera em:</div>
-        <div class="countdown-timer" id="countdownTimer2">--:--:--</div>
-        <div class="countdown-subtitle">Servidor inicia às 21:00</div>
-    </div>
     
     <div class="patches-list">
         <div class="patch-item" onclick="togglePatch('patch-v2-0-0')">
@@ -99,21 +93,28 @@ layout: default
             
             <div class="patch-content" id="patch-v2-0-0">
                 <div class="patch-body">
-                    <h4>TL;DR</h4>
-                    <ul>
-                        <li><strong>Rates</strong>: Zeny 3×, XP 2×, Drops 3×.</li>
-                        <li><strong>HP/SP Máximo</strong> aumentado para <strong>55k</strong>.</li>
-                        <li><strong>XP 126–150</strong> mais suavizada (≈<strong>–60%</strong> de XP total necessária).</li>
-                        <li><strong>Loot revisado</strong> (Relics, Orbs, Lost Rune Coffer, Galactic Dust, etc.).</li>
-                        <li><strong>Bifrostmirror</strong> agora é <strong>account-wide</strong>.</li>
-                        <li><strong>Random Options</strong> sempre no <strong>valor máximo</strong> + itens já <strong>identificados</strong>.</li>
-                        <li><strong>Visual Drop</strong> substitui "equip/carta que aumenta drop" no sistema padrão.</li>
-                        <li>Ajustes em <strong>Gift Boxes</strong>: RNG suavizado p/ quests dos aneis de unchained job.</li>
-                        <li><strong>Novo NPC</strong> misterioso no Orfanato.</li>
-                        <li><strong>Celestial Tome</strong>: exige <strong>30 Hatred quests</strong> + <strong>nível 130</strong>.</li>
-                        <li><strong>Goblin King Relic</strong> implementada.</li>
-                        <li><strong>Abandoned Castle</strong>: passa a dropar <strong>Crumb of Sobbing Starlight</strong> e <strong>Emperium</strong>.</li>
-                    </ul>
+                     <h4>TL;DR</h4>
+                     <ul>
+                         <li><strong>Rates</strong>: Zeny 3×, XP 2×, Drops 3×.</li>
+                         <li><strong>HP/SP Máximo</strong> aumentado para <strong>55k</strong>.</li>
+                         <li><strong>XP 126–150</strong> mais suavizada (≈<strong>–60%</strong> de XP total necessária).</li>
+                         <li><strong>Loot revisado</strong> (Relics, Orbs, Lost Rune Coffer, Galactic Dust, etc.).</li>
+                         <li><strong>Bifrostmirror</strong> agora é <strong>account-wide</strong>.</li>
+                         <li><strong>Random Options</strong> sempre no <strong>valor máximo</strong> + itens já <strong>identificados</strong>.</li>
+                         <li><strong>Visual Drop</strong> substitui "equip/carta que aumenta drop" no sistema padrão.</li>
+                         <li>Ajustes em <strong>Gift Boxes</strong>: RNG suavizado p/ quests dos aneis de unchained job.</li>
+                         <li><strong>Novo NPC</strong> misterioso no Orfanato.</li>
+                         <li><strong>Celestial Tome</strong>: exige <strong>30 Hatred quests</strong> + <strong>nível 130</strong>.</li>
+                         <li><strong>Goblin King Relic</strong> implementada.</li>
+                         <li><strong>Abandoned Castle</strong>: passa a dropar <strong>Crumb of Sobbing Starlight</strong> e <strong>Emperium</strong>.</li>
+                     </ul>
+                     
+                     <!-- Countdown dentro do patch -->
+                     <div class="patches-countdown">
+                         <div class="countdown-text">📥 Download libera em:</div>
+                         <div class="countdown-timer" id="countdownTimer2">--:--:--</div>
+                         <div class="countdown-subtitle">Servidor inicia às 21:00</div>
+                     </div>
                     
                     <div class="patch-actions">
                         <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="patch-link">
