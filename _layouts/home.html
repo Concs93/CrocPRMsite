@@ -70,6 +70,25 @@ layout: default
     </div>
 </div>
 
+<!-- Player de Música -->
+<div class="music-player">
+    <audio id="backgroundMusic" loop>
+        <source src="/assets/music/ost.mp3" type="audio/mpeg">
+        <source src="/assets/music/ost.ogg" type="audio/ogg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <div class="music-controls">
+        <button id="playPauseBtn" class="music-btn">🎵</button>
+        <div class="music-info">
+            <span id="musicTitle">CrocPRM OST</span>
+            <div class="volume-control">
+                <input type="range" id="volumeSlider" min="0" max="100" value="30">
+                <span id="volumeDisplay">30%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="roadmap-section">
     <h2>🗺️ Roadmap</h2>
     <p class="section-description">Planos futuros para o CrocPRM Server</p>
@@ -177,4 +196,46 @@ function togglePatch(patchId) {
         patchItem.classList.add('expanded');
     }
 }
+
+// Controle do player de música
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('backgroundMusic');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeDisplay = document.getElementById('volumeDisplay');
+    
+    if (audio && playPauseBtn && volumeSlider && volumeDisplay) {
+        // Configurar volume inicial
+        audio.volume = 0.3;
+        
+        // Controle de play/pause
+        playPauseBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.textContent = '⏸️';
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = '🎵';
+            }
+        });
+        
+        // Controle de volume
+        volumeSlider.addEventListener('input', function() {
+            const volume = this.value / 100;
+            audio.volume = volume;
+            volumeDisplay.textContent = this.value + '%';
+        });
+        
+        // Auto-play suave (com permissão do usuário)
+        document.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    playPauseBtn.textContent = '⏸️';
+                }).catch(e => {
+                    console.log('Auto-play foi bloqueado pelo navegador');
+                });
+            }
+        }, { once: true });
+    }
+});
 </script>
