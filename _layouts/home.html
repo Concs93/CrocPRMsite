@@ -122,13 +122,13 @@ layout: default
 </div>
 
 <script>
-// Contagem regressiva para 18:00 (horário de Brasília)
+// Contagem regressiva para 21:00 (horário de Brasília)
 function startCountdown() {
-    // Definir 18:00 no fuso horário de Brasília (UTC-3)
+    // Definir 21:00 no fuso horário de Brasília (UTC-3)
     const now = new Date();
     const brasiliaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
     const today = new Date(brasiliaTime.getFullYear(), brasiliaTime.getMonth(), brasiliaTime.getDate());
-    const releaseTime = new Date(today.getTime() + 18 * 60 * 60 * 1000); // 18:00 Brasília
+    const releaseTime = new Date(today.getTime() + 21 * 60 * 60 * 1000); // 21:00 Brasília
     
     // Converter para UTC para cálculo correto
     const releaseTimeUTC = new Date(releaseTime.getTime() + 3 * 60 * 60 * 1000); // +3 horas para UTC
