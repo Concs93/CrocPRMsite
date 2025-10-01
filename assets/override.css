@@ -1,0 +1,104 @@
+/* OVERRIDE CSS - FORÇAR DARK THEME */
+/* Este arquivo sobrescreve TODOS os estilos do tema */
+
+/* Reset completo */
+* {
+  background: #0d1117 !important;
+  color: #f0f6fc !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif !important;
+}
+
+/* HTML e Body */
+html, body {
+  background: #0d1117 !important;
+  background-color: #0d1117 !important;
+  background-image: none !important;
+  color: #f0f6fc !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Wrapper e containers */
+.wrapper, .site, .page, .home {
+  background: #0d1117 !important;
+  color: #f0f6fc !important;
+}
+
+/* Header */
+.page-header {
+  background: #161b22 !important;
+  background-color: #161b22 !important;
+  background-image: none !important;
+  border-bottom: 1px solid #30363d !important;
+}
+
+.project-name {
+  color: #f0f6fc !important;
+  text-shadow: none !important;
+}
+
+.project-tagline {
+  color: #8b949e !important;
+}
+
+/* Conteúdo principal */
+.main-content {
+  background: #0d1117 !important;
+  background-color: #0d1117 !important;
+  background-image: none !important;
+  color: #f0f6fc !important;
+}
+
+/* Todos os textos */
+p, li, span, div, ul, ol, h1, h2, h3, h4, h5, h6 {
+  color: #f0f6fc !important;
+  background: transparent !important;
+}
+
+/* Links */
+a {
+  color: #58a6ff !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+
+a:hover {
+  color: #7c3aed !important;
+  text-decoration: underline !important;
+}
+
+/* Negrito */
+strong, b {
+  color: #58a6ff !important;
+  font-weight: bold !important;
+  background: transparent !important;
+}
+
+/* Listas */
+ul, ol {
+  color: #f0f6fc !important;
+  background: transparent !important;
+}
+
+li {
+  color: #f0f6fc !important;
+  background: transparent !important;
+}
+
+/* Cards e seções */
+.hero-section, .tldr-section, .main-container {
+  background: #21262d !important;
+  color: #f0f6fc !important;
+  border: 1px solid #30363d !important;
+}
+
+/* Botões */
+.main-link {
+  background: #58a6ff !important;
+  color: white !important;
+}
+
+.main-link:hover {
+  background: #7c3aed !important;
+  color: white !important;
+}

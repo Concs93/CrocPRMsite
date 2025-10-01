@@ -1,3 +1,10 @@
+/* ===== DARK THEME FORÇADO - CARREGAR PRIMEIRO ===== */
+/* Esta regra deve ser a primeira para sobrescrever o tema */
+html, body, * {
+  background: #0d1117 !important;
+  color: #f0f6fc !important;
+}
+
 /* ===== DARK THEME SIMPLIFICADO ===== */
 :root {
   --bg-primary: #0d1117;
@@ -443,8 +450,14 @@ blockquote {
   color: white;
 }
 
-/* ===== FORÇAR DARK THEME - REGRAS ESPECÍFICAS ===== */
-/* Sobrescrever qualquer estilo do tema Cayman */
+/* ===== FORÇAR DARK THEME - REGRAS AGRESSIVAS ===== */
+/* Reset completo e forçar dark theme */
+* {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Elementos específicos do Jekyll/Cayman */
 body,
 html,
 .wrapper,
@@ -456,43 +469,75 @@ html,
 .page-header .project-name,
 .page-header .project-tagline,
 h1, h2, h3, h4, h5, h6,
-p, li, span, div,
-a, strong, em {
+p, li, span, div, ul, ol,
+a, strong, em, b, i {
   background: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
 
-/* Links específicos */
+/* Forçar background escuro em tudo */
+html, body {
+  background-color: #0d1117 !important;
+  background-image: none !important;
+  color: #f0f6fc !important;
+}
+
+/* Header específico */
+.page-header {
+  background-color: #161b22 !important;
+  background-image: none !important;
+  border-bottom: 1px solid #30363d !important;
+}
+
+/* Títulos */
+.project-name {
+  color: #f0f6fc !important;
+  text-shadow: none !important;
+}
+
+.project-tagline {
+  color: #8b949e !important;
+}
+
+/* Conteúdo principal */
+.main-content {
+  background-color: #0d1117 !important;
+  background-image: none !important;
+  color: #f0f6fc !important;
+}
+
+/* Links */
 a {
-  color: var(--accent-primary) !important;
+  color: #58a6ff !important;
+  text-decoration: none !important;
 }
 
 a:hover {
-  color: var(--accent-secondary) !important;
+  color: #7c3aed !important;
+  text-decoration: underline !important;
 }
 
-/* Títulos específicos */
+/* Texto */
+p, li, span, div {
+  color: #f0f6fc !important;
+}
+
+/* Títulos */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--text-primary) !important;
+  color: #f0f6fc !important;
 }
 
-/* Texto secundário */
-.project-tagline,
-.tldr-content,
-p {
-  color: var(--text-primary) !important;
+/* Listas */
+ul, ol {
+  color: #f0f6fc !important;
 }
 
-/* Forçar dark em todos os elementos de texto */
-* {
-  color: inherit !important;
+li {
+  color: #f0f6fc !important;
 }
 
-/* Exceções para links */
-a, a:visited, a:active {
-  color: var(--accent-primary) !important;
-}
-
-a:hover {
-  color: var(--accent-secondary) !important;
+/* Strong/negrito */
+strong, b {
+  color: #58a6ff !important;
+  font-weight: bold !important;
 }

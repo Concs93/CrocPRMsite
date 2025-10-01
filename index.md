@@ -9,7 +9,7 @@ title: CrocPRM Server
     <p class="hero-subtitle">Bora meus conclavos!!</p>
     
     <div class="links-section">
-      <a href="/CrocPRMsite/2025/09/29/v2-1-0.html" class="main-link">
+      <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="main-link">
         📋 Patch Notes
       </a>
       <a href="https://drive.google.com/file/d/1HN8GmRmT1tXbHBKS-o3zOPdmdOyEfcmQ" class="main-link download">
@@ -19,7 +19,7 @@ title: CrocPRM Server
   </div>
 
   <div class="tldr-section">
-    <h2>📋 Última Atualização - v2.1.0</h2>
+    <h2>📋 Última Atualização - v2.0.0</h2>
     <div class="tldr-content">
       <ul>
         <li><strong>Rates</strong>: Zeny 3×, XP 2×, Drops 3×.</li>

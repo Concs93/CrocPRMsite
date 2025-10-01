@@ -15,3 +15,12 @@ kramdown:
 
 # Forçar dark theme
 color_scheme: dark
+
+# Carregar CSS customizado
+sass:
+  sass_dir: assets
+  style: compressed
+
+# Incluir CSS de override
+include:
+  - assets/override.css
