@@ -6,10 +6,10 @@ title: CrocPRM Server
 <div class="main-container">
   <div class="hero-section">
     <h1 class="hero-title">🎮 CrocPRM Server</h1>
-    <p class="hero-subtitle">O servidor de Ragnarok Online mais equilibrado e divertido!</p>
+    <p class="hero-subtitle">Bora meus conclavos!!</p>
     
     <div class="links-section">
-      <a href="/2025/09/29/v2-1-0.html" class="main-link">
+      <a href="/CrocPRMsite/2025/09/29/v2-1-0.html" class="main-link">
         📋 Patch Notes
       </a>
       <a href="https://drive.google.com/file/d/1HN8GmRmT1tXbHBKS-o3zOPdmdOyEfcmQ" class="main-link download">
