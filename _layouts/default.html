@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'pt-BR' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    
+    <!-- Dark Theme CSS -->
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent-primary: #58a6ff;
+            --accent-secondary: #7c3aed;
+            --border-primary: #30363d;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif !important;
+            line-height: 1.6 !important;
+            min-height: 100vh !important;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            background: var(--bg-secondary) !important;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-primary);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--text-primary) !important;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary) !important;
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            background: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .main-content h1, .main-content h2, .main-content h3, 
+        .main-content h4, .main-content h5, .main-content h6 {
+            color: var(--text-primary) !important;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .main-content p, .main-content li {
+            color: var(--text-primary) !important;
+            margin-bottom: 1rem;
+        }
+
+        .main-content a {
+            color: var(--accent-primary) !important;
+            text-decoration: none;
+        }
+
+        .main-content a:hover {
+            color: var(--accent-secondary) !important;
+            text-decoration: underline;
+        }
+
+        .main-content strong, .main-content b {
+            color: var(--accent-primary) !important;
+            font-weight: bold;
+        }
+
+        .main-content ul, .main-content ol {
+            color: var(--text-primary) !important;
+            padding-left: 2rem;
+        }
+
+        .main-content li {
+            color: var(--text-primary) !important;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--bg-card) !important;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary) !important;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary) !important;
+            margin-bottom: 2rem;
+        }
+
+        .links-section {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .main-link {
+            display: inline-block;
+            background: var(--accent-primary) !important;
+            color: white !important;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none !important;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .main-link:hover {
+            background: var(--accent-secondary) !important;
+            transform: translateY(-2px);
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+        .main-link.download {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%) !important;
+        }
+
+        /* TLDR Section */
+        .tldr-section {
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .tldr-section h2 {
+            color: var(--accent-primary) !important;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .tldr-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tldr-content li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-primary);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tldr-content li:last-child {
+            border-bottom: none;
+        }
+
+        .tldr-content li::before {
+            content: "•";
+            color: var(--accent-primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Post Content */
+        .post-content {
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-primary);
+        }
+
+        .post-header {
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .post-date, .post-version {
+            background: var(--bg-secondary) !important;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary) !important;
+            border: 1px solid var(--border-primary);
+        }
+
+        .post-version {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%) !important;
+            color: white !important;
+            border: none;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card) !important;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--border-primary);
+            padding: 1rem;
+            text-align: left;
+            color: var(--text-primary) !important;
+        }
+
+        th {
+            background: var(--bg-secondary) !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        /* Code */
+        pre, code {
+            background: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+            border-radius: 8px;
+            border: 1px solid var(--border-primary);
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            box-shadow: var(--shadow);
+        }
+
+        code {
+            padding: 0.25rem 0.5rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid var(--accent-primary);
+            background: var(--bg-card) !important;
+            color: var(--text-secondary) !important;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        /* Download Section */
+        .download-section {
+            background: var(--bg-card) !important;
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .download-section h3 {
+            color: var(--accent-primary) !important;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .download-section p {
+            color: var(--text-secondary) !important;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            .links-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .main-link {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>{{ site.title }}</h1>
+            <p>{{ site.description }}</p>
+        </header>
+        
+        <main class="main-content">
+            {{ content }}
+        </main>
+    </div>
+</body>
+</html>

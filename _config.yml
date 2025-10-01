@@ -1,8 +1,5 @@
 title: CrocPRM Server
 description: O servidor de Ragnarok Online mais equilibrado e divertido!
-remote_theme: pages-themes/cayman@v0.2.0
-plugins:
-  - jekyll-remote-theme
 
 # Configuração para GitHub Pages
 url: "https://concs93.github.io"
@@ -13,14 +10,15 @@ markdown: kramdown
 kramdown:
   input: GFM
 
-# Forçar dark theme
-color_scheme: dark
-
-# Carregar CSS customizado
-sass:
-  sass_dir: assets
-  style: compressed
-
-# Incluir CSS de override
-include:
-  - assets/override.css
+# Configurações de layout
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
