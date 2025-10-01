@@ -26,6 +26,13 @@ layout: default
     <h2>📋 Patch Notes</h2>
     <p class="section-description">Clique em um patch para ver os detalhes completos</p>
     
+    <!-- Countdown também na seção de patches -->
+    <div class="patches-countdown">
+        <div class="countdown-text">📥 Download libera em:</div>
+        <div class="countdown-timer" id="countdownTimer2">--:--:--</div>
+        <div class="countdown-subtitle">Servidor inicia às 21:00</div>
+    </div>
+    
     <div class="patches-list">
         <div class="patch-item" onclick="togglePatch('patch-v2-0-0')">
             <div class="patch-header">
@@ -134,8 +141,10 @@ function startCountdown() {
     }
     
     const countdownTimer = document.getElementById('countdownTimer');
+    const countdownTimer2 = document.getElementById('countdownTimer2');
     const downloadBtn = document.getElementById('downloadBtn');
     const countdownContainer = document.getElementById('countdownContainer');
+    const patchesCountdown = document.querySelector('.patches-countdown');
     
     function updateCountdown() {
         const now = new Date();
@@ -145,6 +154,7 @@ function startCountdown() {
         if (timeLeft <= 0) {
             // Tempo chegou! Mostrar botão de download
             countdownContainer.style.display = 'none';
+            if (patchesCountdown) patchesCountdown.style.display = 'none';
             downloadBtn.style.display = 'inline-block';
             return;
         }
@@ -153,10 +163,13 @@ function startCountdown() {
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
         
-        countdownTimer.textContent = 
+        const timeString = 
             String(hours).padStart(2, '0') + ':' + 
             String(minutes).padStart(2, '0') + ':' + 
             String(seconds).padStart(2, '0');
+            
+        countdownTimer.textContent = timeString;
+        if (countdownTimer2) countdownTimer2.textContent = timeString;
     }
     
     // Atualizar a cada segundo
