@@ -108,13 +108,6 @@ layout: default
                          <li><strong>Goblin King Relic</strong> implementada.</li>
                          <li><strong>Abandoned Castle</strong>: passa a dropar <strong>Crumb of Sobbing Starlight</strong> e <strong>Emperium</strong>.</li>
                      </ul>
-                     
-                     <!-- Countdown dentro do patch -->
-                     <div class="patches-countdown">
-                         <div class="countdown-text">📥 Download libera em:</div>
-                         <div class="countdown-timer" id="countdownTimer2">--:--:--</div>
-                         <div class="countdown-subtitle">Servidor inicia às 21:00</div>
-                     </div>
                     
                     <div class="patch-actions">
                         <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="patch-link">
@@ -191,10 +184,8 @@ function startCountdown() {
     }
     
     const countdownTimer = document.getElementById('countdownTimer');
-    const countdownTimer2 = document.getElementById('countdownTimer2');
     const downloadBtn = document.getElementById('downloadBtn');
     const countdownContainer = document.getElementById('countdownContainer');
-    const patchesCountdown = document.querySelector('.patches-countdown');
     
     function updateCountdown() {
         const now = new Date();
@@ -204,7 +195,6 @@ function startCountdown() {
         if (timeLeft <= 0) {
             // Tempo chegou! Mostrar botão de download
             countdownContainer.style.display = 'none';
-            if (patchesCountdown) patchesCountdown.style.display = 'none';
             downloadBtn.style.display = 'inline-block';
             return;
         }
@@ -219,7 +209,6 @@ function startCountdown() {
             String(seconds).padStart(2, '0');
             
         countdownTimer.textContent = timeString;
-        if (countdownTimer2) countdownTimer2.textContent = timeString;
     }
     
     // Atualizar a cada segundo
