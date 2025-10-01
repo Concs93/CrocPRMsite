@@ -6,30 +6,73 @@ layout: default
     <p class="hero-subtitle">Bora meus conclavos!!</p>
     
     <div class="links-section">
-        <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="main-link">
-            📋 Patch Notes
-        </a>
         <a href="https://drive.google.com/file/d/1HN8GmRmT1tXbHBKS-o3zOPdmdOyEfcmQ" class="main-link download">
             📥 Baixar Cliente
         </a>
     </div>
 </div>
 
-<div class="tldr-section">
-    <h2>📋 Última Atualização - v2.0.0</h2>
-    <div class="tldr-content">
-        <ul>
-            <li><strong>Rates</strong>: Zeny 3×, XP 2×, Drops 3×.</li>
-            <li><strong>XP 126–150</strong> mais suavizada (≈<strong>–60%</strong> de XP total necessária).</li>
-            <li><strong>Loot revisado</strong> (Relics, Orbs, Lost Rune Coffer, Galactic Dust, etc.).</li>
-            <li><strong>Bifrostmirror</strong> agora é <strong>account-wide</strong>.</li>
-            <li><strong>Random Options</strong> sempre no <strong>valor máximo</strong> + itens já <strong>identificados</strong>.</li>
-            <li><strong>Visual Drop</strong> substitui "equip/carta que aumenta drop" no sistema padrão.</li>
-            <li>Ajustes em <strong>Gift Boxes</strong>: RNG suavizado p/ quests dos aneis de unchained job.</li>
-            <li><strong>Novo NPC</strong> misterioso no Orfanato.</li>
-            <li><strong>Celestial Tome</strong>: exige <strong>30 Hatred quests</strong> + <strong>nível 130</strong>.</li>
-            <li><strong>Goblin King Relic</strong> implementada.</li>
-            <li><strong>Abandoned Castle</strong>: passa a dropar <strong>Crumb of Sobbing Starlight</strong> e <strong>Emperium</strong>.</li>
-        </ul>
+<div class="patches-section">
+    <h2>📋 Patch Notes</h2>
+    <p class="section-description">Clique em um patch para ver os detalhes completos</p>
+    
+    <div class="patches-list">
+        <div class="patch-item" onclick="togglePatch('patch-v2-0-0')">
+            <div class="patch-header">
+                <div class="patch-title">
+                    <h3>Patch v2.0.0 — Início do CrocPRM</h3>
+                    <div class="patch-meta">
+                        <span class="patch-date">📅 29 de Setembro, 2025</span>
+                        <span class="patch-version">🏷️ v2.0.0</span>
+                    </div>
+                </div>
+                <div class="patch-toggle">
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            
+            <div class="patch-content" id="patch-v2-0-0">
+                <div class="patch-body">
+                    <h4>TL;DR</h4>
+                    <ul>
+                        <li><strong>Rates</strong>: Zeny 3×, XP 2×, Drops 3×.</li>
+                        <li><strong>XP 126–150</strong> mais suavizada (≈<strong>–60%</strong> de XP total necessária).</li>
+                        <li><strong>Loot revisado</strong> (Relics, Orbs, Lost Rune Coffer, Galactic Dust, etc.).</li>
+                        <li><strong>Bifrostmirror</strong> agora é <strong>account-wide</strong>.</li>
+                        <li><strong>Random Options</strong> sempre no <strong>valor máximo</strong> + itens já <strong>identificados</strong>.</li>
+                        <li><strong>Visual Drop</strong> substitui "equip/carta que aumenta drop" no sistema padrão.</li>
+                        <li>Ajustes em <strong>Gift Boxes</strong>: RNG suavizado p/ quests dos aneis de unchained job.</li>
+                        <li><strong>Novo NPC</strong> misterioso no Orfanato.</li>
+                        <li><strong>Celestial Tome</strong>: exige <strong>30 Hatred quests</strong> + <strong>nível 130</strong>.</li>
+                        <li><strong>Goblin King Relic</strong> implementada.</li>
+                        <li><strong>Abandoned Castle</strong>: passa a dropar <strong>Crumb of Sobbing Starlight</strong> e <strong>Emperium</strong>.</li>
+                    </ul>
+                    
+                    <div class="patch-actions">
+                        <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="patch-link">
+                            📖 Ver Patch Completo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+function togglePatch(patchId) {
+    const content = document.getElementById(patchId);
+    const toggleIcon = content.previousElementSibling.querySelector('.toggle-icon');
+    const patchItem = content.closest('.patch-item');
+    
+    if (content.style.display === 'block') {
+        content.style.display = 'none';
+        toggleIcon.textContent = '▼';
+        patchItem.classList.remove('expanded');
+    } else {
+        content.style.display = 'block';
+        toggleIcon.textContent = '▲';
+        patchItem.classList.add('expanded');
+    }
+}
+</script>
