@@ -150,6 +150,7 @@
             box-shadow: var(--shadow);
             min-width: 180px;
             text-align: center;
+            border: 2px solid transparent;
         }
 
         .main-link:hover {
@@ -157,10 +158,21 @@
             transform: translateY(-2px);
             color: white !important;
             text-decoration: none !important;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
         }
 
         .main-link.download {
             background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%) !important;
+        }
+
+        /* Garantir que o texto dos botões seja sempre branco */
+        .main-link, .main-link:visited, .main-link:active, .main-link:hover {
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+        .main-link * {
+            color: white !important;
         }
 
         /* TLDR Section */
@@ -385,6 +397,43 @@
             border-radius: 0 8px 8px 0;
             margin: 1.5rem 0;
             box-shadow: var(--shadow);
+        }
+
+        /* Back Button */
+        .back-button-container {
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card) !important;
+            color: var(--accent-primary) !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--accent-primary) !important;
+            color: white !important;
+            text-decoration: none !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.3);
+        }
+
+        .back-button:visited, .back-button:active {
+            color: var(--accent-primary) !important;
+        }
+
+        .back-button:hover:visited, .back-button:hover:active {
+            color: white !important;
         }
 
         /* Download Section */
