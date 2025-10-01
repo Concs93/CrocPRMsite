@@ -7,14 +7,9 @@ layout: default
     
     <div class="links-section">
         <div class="download-container">
-            <a href="https://drive.google.com/file/d/1HN8GmRmT1tXbHBKS-o3zOPdmdOyEfcmQ" class="main-link download" id="downloadBtn" style="display: none;">
+            <a href="https://drive.google.com/file/d/1HN8GmRmT1tXbHBKS-o3zOPdmdOyEfcmQ" class="main-link download">
                 📥 Baixar Cliente
             </a>
-            <div class="countdown-container" id="countdownContainer">
-                <div class="countdown-text">📥 Download libera em:</div>
-                <div class="countdown-timer" id="countdownTimer">--:--:--</div>
-                <div class="countdown-subtitle">Servidor inicia às 21:00</div>
-            </div>
         </div>
         <a href="https://discord.gg/QnbWkGjs" class="main-link discord">
             💬 Discord do Rusbando
@@ -31,7 +26,7 @@ layout: default
             <div class="step-number">1</div>
             <div class="step-content">
                 <h3>Baixe o Cliente</h3>
-                <p>Faça o download do cliente quando estiver disponível (após 18:30)</p>
+                <p>Faça o download do cliente</p>
             </div>
         </div>
         
@@ -39,7 +34,7 @@ layout: default
             <div class="step-number">2</div>
             <div class="step-content">
                 <h3>Execute o Cliente</h3>
-                <p>Execute o arquivo <code>PRM.exe</code> e aguarde o servidor iniciar (21:00)</p>
+                <p>Execute o arquivo <code>PRM.exe</code></p>
             </div>
         </div>
         
@@ -168,57 +163,6 @@ layout: default
 </div>
 
 <script>
-// Contagem regressiva para 18:30 (horário de Brasília)
-function startCountdown() {
-    // Criar data para 18:30 hoje no horário de Brasília
-    const now = new Date();
-    const brasiliaNow = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
-    const today = new Date(brasiliaNow.getFullYear(), brasiliaNow.getMonth(), brasiliaNow.getDate());
-    
-    // 18:30 de hoje em Brasília
-    const releaseTime = new Date(today.getTime() + 18 * 60 * 60 * 1000 + 30 * 60 * 1000);
-    
-    // Se já passou das 18:30 hoje, usar amanhã
-    if (brasiliaNow.getTime() > releaseTime.getTime()) {
-        releaseTime.setDate(releaseTime.getDate() + 1);
-    }
-    
-    const countdownTimer = document.getElementById('countdownTimer');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const countdownContainer = document.getElementById('countdownContainer');
-    
-    function updateCountdown() {
-        const now = new Date();
-        const brasiliaNow = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
-        const timeLeft = releaseTime - brasiliaNow;
-        
-        if (timeLeft <= 0) {
-            // Tempo chegou! Mostrar botão de download
-            countdownContainer.style.display = 'none';
-            downloadBtn.style.display = 'inline-block';
-            return;
-        }
-        
-        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        
-        const timeString = 
-            String(hours).padStart(2, '0') + ':' + 
-            String(minutes).padStart(2, '0') + ':' + 
-            String(seconds).padStart(2, '0');
-            
-        countdownTimer.textContent = timeString;
-    }
-    
-    // Atualizar a cada segundo
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
-
-// Iniciar contagem regressiva quando a página carregar
-document.addEventListener('DOMContentLoaded', startCountdown);
-
 function togglePatch(patchId) {
     const content = document.getElementById(patchId);
     const toggleIcon = content.previousElementSibling.querySelector('.toggle-icon');
@@ -234,5 +178,4 @@ function togglePatch(patchId) {
         patchItem.classList.add('expanded');
     }
 }
-
 </script>
