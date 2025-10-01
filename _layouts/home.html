@@ -120,14 +120,18 @@ layout: default
 <script>
 // Contagem regressiva para 18:30 (horário de Brasília)
 function startCountdown() {
-    // Definir 18:30 no fuso horário de Brasília (UTC-3)
+    // Criar data para 18:30 hoje no horário de Brasília
     const now = new Date();
-    const brasiliaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
-    const today = new Date(brasiliaTime.getFullYear(), brasiliaTime.getMonth(), brasiliaTime.getDate());
-    const releaseTime = new Date(today.getTime() + 18 * 60 * 60 * 1000 + 30 * 60 * 1000); // 18:30 Brasília
+    const brasiliaNow = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
+    const today = new Date(brasiliaNow.getFullYear(), brasiliaNow.getMonth(), brasiliaNow.getDate());
     
-    // Converter para UTC para cálculo correto
-    const releaseTimeUTC = new Date(releaseTime.getTime() + 3 * 60 * 60 * 1000); // +3 horas para UTC
+    // 18:30 de hoje em Brasília
+    const releaseTime = new Date(today.getTime() + 18 * 60 * 60 * 1000 + 30 * 60 * 1000);
+    
+    // Se já passou das 18:30 hoje, usar amanhã
+    if (brasiliaNow.getTime() > releaseTime.getTime()) {
+        releaseTime.setDate(releaseTime.getDate() + 1);
+    }
     
     const countdownTimer = document.getElementById('countdownTimer');
     const downloadBtn = document.getElementById('downloadBtn');
@@ -135,7 +139,8 @@ function startCountdown() {
     
     function updateCountdown() {
         const now = new Date();
-        const timeLeft = releaseTimeUTC - now;
+        const brasiliaNow = new Date(now.toLocaleString("en-US", {timeZone: "America/Sao_Paulo"}));
+        const timeLeft = releaseTime - brasiliaNow;
         
         if (timeLeft <= 0) {
             // Tempo chegou! Mostrar botão de download
