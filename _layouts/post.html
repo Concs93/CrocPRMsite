@@ -54,8 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set initial volume from saved state or default
     const initialVolume = savedVolume ? parseFloat(savedVolume) : 0.1;
     audio.volume = initialVolume;
-    volumeSlider.value = initialVolume * 100;
+    volumeSlider.value = Math.round(initialVolume * 100);
     volumeDisplay.textContent = Math.round(initialVolume * 100) + '%';
+    
+    // Force update display
+    setTimeout(() => {
+        volumeSlider.value = Math.round(initialVolume * 100);
+        volumeDisplay.textContent = Math.round(initialVolume * 100) + '%';
+    }, 100);
     
     // Auto-play with user interaction (browsers require this)
     let hasUserInteracted = false;
@@ -64,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!hasUserInteracted) {
             // Check if music was playing before
             if (savedPlaying === 'true') {
+                audio.currentTime = parseFloat(localStorage.getItem('musicTime') || '0');
                 audio.play().catch(e => console.log('Auto-play prevented:', e));
             }
             hasUserInteracted = true;
@@ -105,6 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
         playPauseBtn.textContent = '🎵';
         localStorage.setItem('musicPlaying', 'false');
     });
+    
+    // Save current time every second
+    setInterval(function() {
+        if (!audio.paused) {
+            localStorage.setItem('musicTime', audio.currentTime.toString());
+        }
+    }, 1000);
     
     // Set initial button state
     if (savedPlaying === 'true') {
