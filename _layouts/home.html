@@ -25,11 +25,11 @@ layout: default
         <div class="music-controls">
             <button id="playPauseBtn" class="music-btn">🎵</button>
             <div class="music-info">
-                <span id="musicTitle">CrocPRM OST</span>
+                <span id="musicTitle">FFXIV OST Amaurot Dungeon Theme (Mortal Instants)</span>
             </div>
             <div class="volume-control">
-                <input type="range" id="volumeSlider" min="0" max="100" value="30">
-                <span id="volumeDisplay">30%</span>
+                <input type="range" id="volumeSlider" min="0" max="100" value="10">
+                <span id="volumeDisplay">10%</span>
             </div>
         </div>
     </div>
@@ -240,12 +240,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const volumeSlider = document.getElementById('volumeSlider');
     const volumeDisplay = document.getElementById('volumeDisplay');
     
+    // Load saved state from localStorage
+    const savedVolume = localStorage.getItem('musicVolume');
+    const savedPlaying = localStorage.getItem('musicPlaying');
+    
+    // Set initial volume from saved state or default
+    const initialVolume = savedVolume ? parseFloat(savedVolume) : 0.1;
+    audio.volume = initialVolume;
+    volumeSlider.value = initialVolume * 100;
+    volumeDisplay.textContent = Math.round(initialVolume * 100) + '%';
+    
     // Auto-play with user interaction (browsers require this)
     let hasUserInteracted = false;
     
     function enableAudio() {
         if (!hasUserInteracted) {
-            audio.play().catch(e => console.log('Auto-play prevented:', e));
+            // Check if music was playing before
+            if (savedPlaying === 'true') {
+                audio.play().catch(e => console.log('Auto-play prevented:', e));
+            }
             hasUserInteracted = true;
         }
     }
@@ -259,9 +272,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (audio.paused) {
             audio.play();
             playPauseBtn.textContent = '⏸️';
+            localStorage.setItem('musicPlaying', 'true');
         } else {
             audio.pause();
             playPauseBtn.textContent = '🎵';
+            localStorage.setItem('musicPlaying', 'false');
         }
     });
     
@@ -270,18 +285,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const volume = this.value / 100;
         audio.volume = volume;
         volumeDisplay.textContent = this.value + '%';
+        localStorage.setItem('musicVolume', volume.toString());
     });
-    
-    // Set initial volume
-    audio.volume = 0.3;
     
     // Update button state based on audio state
     audio.addEventListener('play', function() {
         playPauseBtn.textContent = '⏸️';
+        localStorage.setItem('musicPlaying', 'true');
     });
     
     audio.addEventListener('pause', function() {
         playPauseBtn.textContent = '🎵';
+        localStorage.setItem('musicPlaying', 'false');
     });
+    
+    // Set initial button state
+    if (savedPlaying === 'true') {
+        playPauseBtn.textContent = '⏸️';
+    }
 });
 </script>

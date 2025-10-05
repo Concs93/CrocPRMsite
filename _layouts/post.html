@@ -1,6 +1,24 @@
 ---
 layout: default
 ---
+<!-- Music Player -->
+<div class="music-player">
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="/CrocPRMsite/assets/music/ost.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <div class="music-controls">
+        <button id="playPauseBtn" class="music-btn">🎵</button>
+        <div class="music-info">
+            <span id="musicTitle">FFXIV OST Amaurot Dungeon Theme (Mortal Instants)</span>
+        </div>
+        <div class="volume-control">
+            <input type="range" id="volumeSlider" min="0" max="100" value="10">
+            <span id="volumeDisplay">10%</span>
+        </div>
+    </div>
+</div>
+
 <div class="back-button-container">
     <a href="/CrocPRMsite/" class="back-button">
         ← Voltar para o início
@@ -20,3 +38,77 @@ layout: default
         {{ content }}
     </div>
 </article>
+
+<script>
+// Music Player Controls
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('backgroundMusic');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeDisplay = document.getElementById('volumeDisplay');
+    
+    // Load saved state from localStorage
+    const savedVolume = localStorage.getItem('musicVolume');
+    const savedPlaying = localStorage.getItem('musicPlaying');
+    
+    // Set initial volume from saved state or default
+    const initialVolume = savedVolume ? parseFloat(savedVolume) : 0.1;
+    audio.volume = initialVolume;
+    volumeSlider.value = initialVolume * 100;
+    volumeDisplay.textContent = Math.round(initialVolume * 100) + '%';
+    
+    // Auto-play with user interaction (browsers require this)
+    let hasUserInteracted = false;
+    
+    function enableAudio() {
+        if (!hasUserInteracted) {
+            // Check if music was playing before
+            if (savedPlaying === 'true') {
+                audio.play().catch(e => console.log('Auto-play prevented:', e));
+            }
+            hasUserInteracted = true;
+        }
+    }
+    
+    // Enable audio on first user interaction
+    document.addEventListener('click', enableAudio, { once: true });
+    document.addEventListener('keydown', enableAudio, { once: true });
+    
+    // Play/Pause button
+    playPauseBtn.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = '⏸️';
+            localStorage.setItem('musicPlaying', 'true');
+        } else {
+            audio.pause();
+            playPauseBtn.textContent = '🎵';
+            localStorage.setItem('musicPlaying', 'false');
+        }
+    });
+    
+    // Volume control
+    volumeSlider.addEventListener('input', function() {
+        const volume = this.value / 100;
+        audio.volume = volume;
+        volumeDisplay.textContent = this.value + '%';
+        localStorage.setItem('musicVolume', volume.toString());
+    });
+    
+    // Update button state based on audio state
+    audio.addEventListener('play', function() {
+        playPauseBtn.textContent = '⏸️';
+        localStorage.setItem('musicPlaying', 'true');
+    });
+    
+    audio.addEventListener('pause', function() {
+        playPauseBtn.textContent = '🎵';
+        localStorage.setItem('musicPlaying', 'false');
+    });
+    
+    // Set initial button state
+    if (savedPlaying === 'true') {
+        playPauseBtn.textContent = '⏸️';
+    }
+});
+</script>
