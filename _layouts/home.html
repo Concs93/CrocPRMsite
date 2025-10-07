@@ -119,7 +119,7 @@ layout: default
                      </ul>
                     
                     <div class="patch-actions">
-                        <a href="/CrocPRMsite/2025/10/06/v2-1-1.html" class="patch-link">
+                        <a href="/CrocPRMsite/2025/10/06/v2-1-1.html" class="patch-link" data-modal-link>
                             📖 Ver Patch Completo
                         </a>
                     </div>
@@ -155,7 +155,7 @@ layout: default
                      </ul>
                     
                     <div class="patch-actions">
-                        <a href="/CrocPRMsite/2025/10/05/v2-1-0.html" class="patch-link">
+                        <a href="/CrocPRMsite/2025/10/05/v2-1-0.html" class="patch-link" data-modal-link>
                             📖 Ver Patch Completo
                         </a>
                     </div>
@@ -196,7 +196,7 @@ layout: default
                      </ul>
                     
                     <div class="patch-actions">
-                        <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="patch-link">
+                        <a href="/CrocPRMsite/2025/09/29/v2-0-0.html" class="patch-link" data-modal-link>
                             📖 Ver Patch Completo
                         </a>
                     </div>
@@ -204,6 +204,22 @@ layout: default
             </div>
         </div>
     </div>
+</div>
+
+<!-- Patch Modal (overlay) -->
+<div class="patch-modal-overlay" id="patchModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="patch-modal" role="document">
+        <div class="patch-modal-header">
+            <div class="patch-modal-title" id="patchModalTitle">Patch Notes</div>
+            <button class="patch-modal-close" id="patchModalClose" aria-label="Fechar">✕</button>
+        </div>
+        <div class="patch-modal-content" id="patchModalContent">
+            <!-- conteúdo carregado dinamicamente -->
+        </div>
+    </div>
+    <div class="sr-only" aria-live="polite" id="patchModalStatus"></div>
+    <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+    
 </div>
 
 <div class="roadmap-section">
@@ -354,5 +370,82 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedPlaying === 'true') {
         playPauseBtn.textContent = '⏸️';
     }
+});
+
+// Patch Modal Logic
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('patchModal');
+    const modalTitle = document.getElementById('patchModalTitle');
+    const modalContent = document.getElementById('patchModalContent');
+    const modalClose = document.getElementById('patchModalClose');
+    const status = document.getElementById('patchModalStatus');
+
+    function openModal(title) {
+        modalTitle.textContent = title || 'Patch Notes';
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        status.textContent = 'Janela de patch aberta';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        modalContent.innerHTML = '';
+        status.textContent = 'Janela de patch fechada';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    function extractTitleFromHTML(html) {
+        const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+        if (m) return m[1].replace(/<[^>]+>/g, '').trim();
+        const t = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+        return t ? t[1].trim() : 'Patch Notes';
+    }
+
+    function extractArticleBody(html) {
+        // Prefer content within <article class="post-content"> .post-body
+        const articleMatch = html.match(/<article[\s\S]*?class=\"post-content\"[\s\S]*?<div class=\"post-body\">([\s\S]*?)<\/div>[\s\S]*?<\/article>/i);
+        if (articleMatch) return articleMatch[1];
+        // Fallback to main content between <main ...>{{ content }}</main> rendering
+        const mainMatch = html.match(/<main[\s\S]*?>([\s\S]*?)<\/main>/i);
+        if (mainMatch) return mainMatch[1];
+        // Last resort: body content
+        const bodyMatch = html.match(/<body[\s\S]*?>([\s\S]*?)<\/body>/i);
+        return bodyMatch ? bodyMatch[1] : html;
+    }
+
+    function handleModalLinkClick(e) {
+        const link = e.target.closest('a[data-modal-link]');
+        if (!link) return;
+        e.preventDefault();
+        const url = link.getAttribute('href');
+        const titleEl = link.closest('.patch-item')?.querySelector('.patch-title h3');
+        const title = titleEl ? titleEl.textContent : 'Patch Notes';
+
+        modalContent.innerHTML = '<p style="color:var(--text-secondary)">Carregando…</p>';
+        openModal(title);
+        fetch(url, { headers: { 'X-Requested-With': 'fetch' } })
+            .then(r => r.text())
+            .then(html => {
+                // Try to extract only the post body to avoid duplicating header/music
+                const content = extractArticleBody(html);
+                modalContent.innerHTML = content;
+            })
+            .catch(err => {
+                console.error(err);
+                modalContent.innerHTML = '<p style="color:#ef4444">Falha ao carregar o patch. Tente novamente.</p>';
+            });
+    }
+
+    document.addEventListener('click', handleModalLinkClick);
 });
 </script>
