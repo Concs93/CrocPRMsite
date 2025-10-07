@@ -5,9 +5,9 @@ description: Visualização interativa de XP
 ---
 
 <div class="back-button-container">
-    <a href="/CrocPRMsite/" class="back-button">← Voltar para o início</a>
-    <a href="/CrocPRMsite/assets/analysis/exp_analysis_interactive.html" class="back-button" target="_blank" rel="noopener">Abrir em nova aba</a>
-    <a href="/CrocPRMsite/analysis/exp-analysis.html" class="back-button">Recarregar</a>
+    <a href="{{ '/' | relative_url }}" class="back-button">← Voltar para o início</a>
+    <a href="{{ '/assets/analysis/exp_analysis_interactive.html' | relative_url }}" class="back-button" target="_blank" rel="noopener">Abrir em nova aba</a>
+    <a href="{{ '/analysis/exp-analysis.html' | relative_url }}" class="back-button">Recarregar</a>
   </div>
 
 <div class="post-content">
@@ -24,7 +24,7 @@ description: Visualização interativa de XP
 
         <div style="height: 75vh; border: 1px solid var(--border-primary); border-radius: 12px; overflow: hidden; background: var(--bg-card);">
             <iframe 
-                src="/CrocPRMsite/assets/analysis/exp_analysis_interactive.html"
+                src="{{ '/assets/analysis/exp_analysis_interactive.html' | relative_url }}"
                 title="Análise de XP Interativa"
                 style="width: 100%; height: 100%; border: 0; background: var(--bg-card);"
                 loading="lazy"
