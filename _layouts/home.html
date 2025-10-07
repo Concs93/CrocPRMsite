@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const musicTitle = document.getElementById('musicTitle');
 
     // Build playlist from Jekyll static files under assets/music
-    const playlist = [
+    let playlist = [
         {% assign tracks = site.static_files | where_exp: "f", "f.path contains '/assets/music/'" %}
         {% for f in tracks %}
             {% if f.extname == '.mp3' or f.extname == '.ogg' or f.extname == '.wav' %}
@@ -287,6 +287,15 @@ document.addEventListener('DOMContentLoaded', function() {
             {% endif %}
         {% endfor %}
     ].filter(Boolean);
+    // Fallback: if Liquid didn't populate, build from current <source>
+    if (!playlist.length) {
+        const currentSourceEl = audio.querySelector('source');
+        if (currentSourceEl && currentSourceEl.src) {
+            const url = currentSourceEl.getAttribute('src') || currentSourceEl.src;
+            const fileName = url.split('/').pop() || 'music';
+            playlist = [{ title: fileName, src: url }];
+        }
+    }
     // Ensure we don't loop a single track; we want to advance when it ends
     audio.loop = false;
     let currentTrackIndex = 0;
@@ -300,7 +309,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (playlist.length === 0) return;
         currentTrackIndex = clampIndex(index);
         const track = playlist[currentTrackIndex];
+        // Update both <audio> src and inner <source> for broader browser support
+        const sourceEl = audio.querySelector('source');
+        if (sourceEl) sourceEl.setAttribute('src', track.src);
         audio.src = track.src;
+        // Force reload so metadata/title reflect the new source
+        audio.load();
         if (musicTitle) musicTitle.textContent = track.title;
         // no cross-page sync: do not restore time/track from storage
     }
