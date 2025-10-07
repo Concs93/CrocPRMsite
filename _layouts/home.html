@@ -276,17 +276,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const playPauseBtn = document.getElementById('playPauseBtn');
     const volumeSlider = document.getElementById('volumeSlider');
     const volumeDisplay = document.getElementById('volumeDisplay');
+    const musicTitle = document.getElementById('musicTitle');
+
+    // Build playlist from Jekyll static files under assets/music
+    const playlist = [
+        {% assign tracks = site.static_files | where_exp: "f", "f.path contains '/assets/music/'" %}
+        {% for f in tracks %}
+            {% if f.extname == '.mp3' or f.extname == '.ogg' or f.extname == '.wav' %}
+            { title: '{{ f.name }}', src: '{{ f.path | prepend: site.baseurl }}' }{% if forloop.last == false %},{% endif %}
+            {% endif %}
+        {% endfor %}
+    ].filter(Boolean);
+    // Ensure we don't loop a single track; we want to advance when it ends
+    audio.loop = false;
+    let currentTrackIndex = 0;
     
-    // Load saved state from localStorage
-    const savedVolume = localStorage.getItem('musicVolume');
-    const savedPlaying = localStorage.getItem('musicPlaying');
+    function clampIndex(index) {
+        if (playlist.length === 0) return 0;
+        return ((index % playlist.length) + playlist.length) % playlist.length;
+    }
+
+    function loadTrack(index, restoreTime = false) {
+        if (playlist.length === 0) return;
+        currentTrackIndex = clampIndex(index);
+        const track = playlist[currentTrackIndex];
+        audio.src = track.src;
+        if (musicTitle) musicTitle.textContent = track.title;
+        // no cross-page sync: do not restore time/track from storage
+    }
+
+    function nextTrack() {
+        if (playlist.length === 0) return;
+        const nextIndex = clampIndex(currentTrackIndex + 1);
+        loadTrack(nextIndex, false);
+        if (!audio.paused) {
+            audio.play().catch(() => {});
+        }
+    }
     
     // Set initial volume from saved state or default
-    const initialVolume = savedVolume ? parseFloat(savedVolume) : 0.1;
+    const initialVolume = 0.1;
     audio.volume = initialVolume;
     volumeSlider.value = Math.round(initialVolume * 100);
     volumeDisplay.textContent = Math.round(initialVolume * 100) + '%';
     
+    // Initialize first track (restore saved track if available)
+    loadTrack(0, false);
+
     // Force update display
     setTimeout(() => {
         volumeSlider.value = Math.round(initialVolume * 100);
@@ -298,11 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function enableAudio() {
         if (!hasUserInteracted) {
-            // Check if music was playing before
-            if (savedPlaying === 'true') {
-                audio.currentTime = parseFloat(localStorage.getItem('musicTime') || '0');
-                audio.play().catch(e => console.log('Auto-play prevented:', e));
-            }
+            // No cross-page sync: start paused until user hits play
             hasUserInteracted = true;
         }
     }
@@ -316,11 +348,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (audio.paused) {
             audio.play();
             playPauseBtn.textContent = '⏸️';
-            localStorage.setItem('musicPlaying', 'true');
         } else {
             audio.pause();
             playPauseBtn.textContent = '🎵';
-            localStorage.setItem('musicPlaying', 'false');
         }
     });
     
@@ -329,30 +359,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const volume = this.value / 100;
         audio.volume = volume;
         volumeDisplay.textContent = this.value + '%';
-        localStorage.setItem('musicVolume', volume.toString());
     });
     
     // Update button state based on audio state
     audio.addEventListener('play', function() {
         playPauseBtn.textContent = '⏸️';
-        localStorage.setItem('musicPlaying', 'true');
     });
     
     audio.addEventListener('pause', function() {
         playPauseBtn.textContent = '🎵';
-        localStorage.setItem('musicPlaying', 'false');
     });
     
-    // Save current time every second
-    setInterval(function() {
-        if (!audio.paused) {
-            localStorage.setItem('musicTime', audio.currentTime.toString());
-        }
-    }, 1000);
+    // No cross-page sync: do not persist current time
     
-    // Set initial button state
-    if (savedPlaying === 'true') {
-        playPauseBtn.textContent = '⏸️';
-    }
+    // Advance to next track when current ends
+    audio.addEventListener('ended', function() {
+        nextTrack();
+    });
+
+    // Initial button state remains paused icon
 });
 </script>
