@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'pt-BR' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    
+    <!-- Dark Theme CSS -->
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent-primary: #58a6ff;
+            --accent-secondary: #7c3aed;
+            --border-primary: #30363d;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif !important;
+            line-height: 1.6 !important;
+            min-height: 100vh !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        .back-button-container {
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card) !important;
+            color: var(--accent-primary) !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--accent-primary) !important;
+            color: white !important;
+            text-decoration: none !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.3);
+        }
+
+        .post-content {
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-primary);
+        }
+
+        .post-header {
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .post-date, .post-version {
+            background: var(--bg-secondary) !important;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary) !important;
+            border: 1px solid var(--border-primary);
+        }
+
+        .post-header h1 {
+            color: var(--text-primary) !important;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {{ content }}
+</body>
+</html>
+
