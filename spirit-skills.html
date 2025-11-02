@@ -7,7 +7,8 @@ description: Guia completo dos Espíritos das Classes
 <style>
     .spirit-container {
         display: flex;
-        gap: 4rem;
+        flex-direction: column;
+        gap: 2.5rem;
         min-height: calc(100vh - 300px);
         padding: 4rem 5rem;
         max-width: 2000px;
@@ -15,44 +16,16 @@ description: Guia completo dos Espíritos das Classes
         width: 100%;
     }
 
-    .spirit-panel {
-        flex: 1;
-        min-width: 650px;
-        max-width: 800px;
-        background: var(--bg-card);
-        border-radius: 12px;
-        padding: 5rem;
-        border: 1px solid var(--border-primary);
-        box-shadow: var(--shadow);
-        overflow: visible;
-    }
-
-    .spirit-panel-left {
-        border-left: 4px solid #ff6b6b;
-    }
-
-    .spirit-panel-right {
-        border-left: 4px solid #4dabf7;
-    }
-
-    .panel-header {
-        text-align: center;
-        margin-bottom: 5rem;
-        padding-bottom: 2.5rem;
-        border-bottom: 2px solid var(--border-primary);
-    }
-
-    .panel-header h2 {
-        color: var(--text-primary);
-        font-size: 2rem;
-        margin: 0;
-        font-weight: 700;
+    .job-pair {
+        display: flex;
+        gap: 2.5rem;
+        align-items: stretch;
     }
 
     .job-entry {
+        flex: 1;
         display: flex;
         gap: 2rem;
-        margin-bottom: 2.5rem;
         padding: 2rem;
         background: var(--bg-secondary);
         border-radius: 8px;
@@ -60,7 +33,15 @@ description: Guia completo dos Espíritos das Classes
         transition: all 0.3s ease;
         align-items: flex-start;
         min-height: 180px;
-        height: auto;
+        height: 100%;
+    }
+
+    .job-entry.job-2-1 {
+        border-left: 4px solid #ff6b6b;
+    }
+
+    .job-entry.job-2-2 {
+        border-left: 4px solid #4dabf7;
     }
 
     .job-entry:hover {
@@ -159,44 +140,26 @@ description: Guia completo dos Espíritos das Classes
         font-size: 1rem;
     }
 
-    @media (max-width: 1600px) {
-        .spirit-container {
-            max-width: 100%;
-            padding: 4rem 3rem;
-            gap: 3rem;
-            width: 98%;
-        }
-        
-        .spirit-panel {
-            min-width: 550px;
-            max-width: none;
-            padding: 4rem;
-        }
-    }
-    
     @media (max-width: 1400px) {
         .spirit-container {
             padding: 3rem 2rem;
-            gap: 2.5rem;
+            gap: 2rem;
         }
         
-        .spirit-panel {
-            min-width: 450px;
-            padding: 3.5rem;
+        .job-pair {
+            gap: 2rem;
         }
     }
 
     @media (max-width: 1024px) {
         .spirit-container {
+            padding: 2rem 1rem;
+            gap: 2rem;
+        }
+        
+        .job-pair {
             flex-direction: column;
             gap: 2rem;
-            padding: 2rem 1rem;
-        }
-
-        .spirit-panel {
-            min-width: auto;
-            max-height: none;
-            padding: 3rem;
         }
     }
 
@@ -228,14 +191,9 @@ description: Guia completo dos Espíritos das Classes
 </div>
 
 <div class="spirit-container">
-    <!-- Painel Esquerdo - Jobs 2-1 -->
-    <div class="spirit-panel spirit-panel-left">
-        <div class="panel-header">
-            <h2>2-1 Jobs</h2>
-        </div>
-
-        <!-- CAVALEIRO -->
-        <div class="job-entry">
+    <!-- Dupla 1: Cavaleiro + Templário -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
             <div class="job-gif">
                 <img src="{{ '/gifs/KNIGHT.gif' | relative_url }}" alt="Cavaleiro">
             </div>
@@ -256,84 +214,7 @@ description: Guia completo dos Espíritos das Classes
             </div>
         </div>
 
-        <!-- MERCENÁRIO -->
-        <div class="job-entry">
-            <div class="job-gif">
-                <img src="{{ '/gifs/ASSASSIN.gif' | relative_url }}" alt="Mercenário">
-            </div>
-            <div class="job-description">
-                <h3 class="job-name">Mercenário</h3>
-                <div class="job-spirit no-description">?</div>
-            </div>
-        </div>
-
-        <!-- SACERDOTE -->
-        <div class="job-entry">
-            <div class="job-gif">
-                <img src="{{ '/gifs/PRIEST.gif' | relative_url }}" alt="Sacerdote">
-            </div>
-            <div class="job-description">
-                <h3 class="job-name">Sacerdote</h3>
-                <div class="job-spirit no-description">?</div>
-            </div>
-        </div>
-
-        <!-- BRUXO -->
-        <div class="job-entry">
-            <div class="job-gif">
-                <img src="{{ '/gifs/WIZARD.gif' | relative_url }}" alt="Bruxo">
-            </div>
-            <div class="job-description">
-                <h3 class="job-name">Bruxo</h3>
-                <div class="job-spirit">
-                    <strong>🔮 Espírito do Bruxo (ID: 3506)</strong><br>
-                    <strong>Atributo:</strong> INT +1<br>
-                    <strong>Efeito ativo:</strong> Ao causar dano mágico, 5% de chance de:<br>
-                    Causar 50% do dano original em área 5x5<br>
-                    <strong>Cooldown:</strong> 5 segundos
-                </div>
-            </div>
-        </div>
-
-        <!-- CAÇADOR -->
-        <div class="job-entry">
-            <div class="job-gif">
-                <img src="{{ '/gifs/HUNTER.gif' | relative_url }}" alt="Caçador">
-            </div>
-            <div class="job-description">
-                <h3 class="job-name">Caçador</h3>
-                <div class="job-spirit">
-                    <strong>🏹 Espírito do Caçador (ID: 3508)</strong><br>
-                    <strong>Atributo:</strong> DEX +2<br>
-                    <strong>Efeito ativo:</strong> Ao atacar com skill física ranged:<br>
-                    Aplica "Curse" no mob por 5 segundos<br>
-                    Ao fim: explosão (Arrow Storm + efeito 1101) em área 9x9<br>
-                    Dano: 3 multi-hits do dano acumulado<br>
-                    <strong>Cooldown:</strong> 30 segundos
-                </div>
-            </div>
-        </div>
-
-        <!-- FERREIRO -->
-        <div class="job-entry">
-            <div class="job-gif">
-                <img src="{{ '/gifs/BLACKSMITH.gif' | relative_url }}" alt="Ferreiro">
-            </div>
-            <div class="job-description">
-                <h3 class="job-name">Ferreiro</h3>
-                <div class="job-spirit no-description">?</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Painel Direito - Jobs 2-2 -->
-    <div class="spirit-panel spirit-panel-right">
-        <div class="panel-header">
-            <h2>2-2 Jobs</h2>
-        </div>
-
-        <!-- TEMPLÁRIO -->
-        <div class="job-entry">
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/CRUSADER.gif' | relative_url }}" alt="Templário">
             </div>
@@ -349,9 +230,21 @@ description: Guia completo dos Espíritos das Classes
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- ARRUACEIRO -->
-        <div class="job-entry">
+    <!-- Dupla 2: Mercenário + Arruaceiro -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ASSASSIN.gif' | relative_url }}" alt="Mercenário">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Mercenário</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/ROGUE.gif' | relative_url }}" alt="Arruaceiro">
             </div>
@@ -360,9 +253,21 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit no-description">?</div>
             </div>
         </div>
+    </div>
 
-        <!-- MONGE -->
-        <div class="job-entry">
+    <!-- Dupla 3: Sacerdote + Monge -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
+            <div class="job-gif">
+                <img src="{{ '/gifs/PRIEST.gif' | relative_url }}" alt="Sacerdote">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Sacerdote</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/MONK.gif' | relative_url }}" alt="Monge">
             </div>
@@ -382,9 +287,27 @@ description: Guia completo dos Espíritos das Classes
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- SÁBIO -->
-        <div class="job-entry">
+    <!-- Dupla 4: Bruxo + Sábio -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
+            <div class="job-gif">
+                <img src="{{ '/gifs/WIZARD.gif' | relative_url }}" alt="Bruxo">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Bruxo</h3>
+                <div class="job-spirit">
+                    <strong>🔮 Espírito do Bruxo (ID: 3506)</strong><br>
+                    <strong>Atributo:</strong> INT +1<br>
+                    <strong>Efeito ativo:</strong> Ao causar dano mágico, 5% de chance de:<br>
+                    Causar 50% do dano original em área 5x5<br>
+                    <strong>Cooldown:</strong> 5 segundos
+                </div>
+            </div>
+        </div>
+
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/SAGE.gif' | relative_url }}" alt="Sábio">
             </div>
@@ -403,9 +326,29 @@ description: Guia completo dos Espíritos das Classes
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- BARDO/ODALISCA -->
-        <div class="job-entry">
+    <!-- Dupla 5: Caçador + Bardo/Odalisca -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
+            <div class="job-gif">
+                <img src="{{ '/gifs/HUNTER.gif' | relative_url }}" alt="Caçador">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Caçador</h3>
+                <div class="job-spirit">
+                    <strong>🏹 Espírito do Caçador (ID: 3508)</strong><br>
+                    <strong>Atributo:</strong> DEX +2<br>
+                    <strong>Efeito ativo:</strong> Ao atacar com skill física ranged:<br>
+                    Aplica "Curse" no mob por 5 segundos<br>
+                    Ao fim: explosão (Arrow Storm + efeito 1101) em área 9x9<br>
+                    Dano: 3 multi-hits do dano acumulado<br>
+                    <strong>Cooldown:</strong> 30 segundos
+                </div>
+            </div>
+        </div>
+
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/BARD-DANCER.gif' | relative_url }}" alt="Bardo/Odalisca">
             </div>
@@ -414,9 +357,21 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit no-description">?</div>
             </div>
         </div>
+    </div>
 
-        <!-- ALQUIMISTA -->
-        <div class="job-entry">
+    <!-- Dupla 6: Ferreiro + Alquimista -->
+    <div class="job-pair">
+        <div class="job-entry job-2-1">
+            <div class="job-gif">
+                <img src="{{ '/gifs/BLACKSMITH.gif' | relative_url }}" alt="Ferreiro">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Ferreiro</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <div class="job-entry job-2-2">
             <div class="job-gif">
                 <img src="{{ '/gifs/ALCHEMIST.gif' | relative_url }}" alt="Alquimista">
             </div>
