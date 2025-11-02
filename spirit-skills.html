@@ -1,0 +1,494 @@
+---
+layout: default
+title: Spirit Skills
+description: Guia completo dos Espíritos das Classes
+---
+
+<style>
+    .spirit-container {
+        display: flex;
+        gap: 2rem;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+    }
+
+    .spirit-panel {
+        flex: 1;
+        background: var(--bg-card);
+        border-radius: 12px;
+        padding: 2rem;
+        border: 1px solid var(--border-primary);
+        box-shadow: var(--shadow);
+        overflow-y: auto;
+        max-height: calc(100vh - 4rem);
+    }
+
+    .spirit-panel-left {
+        border-left: 4px solid #ff6b6b;
+    }
+
+    .spirit-panel-right {
+        border-left: 4px solid #4dabf7;
+    }
+
+    .panel-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-primary);
+    }
+
+    .panel-header h2 {
+        color: var(--text-primary);
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .job-entry {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        border: 1px solid var(--border-primary);
+        transition: all 0.3s ease;
+    }
+
+    .job-entry:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        border-color: var(--accent-primary);
+    }
+
+    .job-gif {
+        flex-shrink: 0;
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .job-gif img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .job-description {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .job-name {
+        color: var(--accent-primary);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .job-spirit {
+        color: var(--text-primary);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .job-spirit strong {
+        color: var(--accent-secondary);
+    }
+
+    .job-spirit code {
+        background: var(--bg-primary);
+        color: var(--accent-primary);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Consolas', monospace;
+        font-size: 0.9rem;
+    }
+
+    .no-description {
+        color: var(--text-secondary);
+        font-style: italic;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .spirit-container {
+            flex-direction: column;
+        }
+
+        .spirit-panel {
+            max-height: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .job-entry {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .job-gif {
+            width: 100px;
+            height: 100px;
+        }
+    }
+</style>
+
+<div class="back-button-container">
+    <a href="{{ '/' | relative_url }}" class="back-button">← Voltar para o início</a>
+</div>
+
+<div class="post-content">
+    <header class="post-header">
+        <h1>✨ Spirit Skills</h1>
+        <div class="post-meta">
+            <span class="post-date">📅 Conteúdo Novo</span>
+        </div>
+    </header>
+</div>
+
+<div class="spirit-container">
+    <!-- Painel Esquerdo - Jobs 2-1 -->
+    <div class="spirit-panel spirit-panel-left">
+        <div class="panel-header">
+            <h2>2-1 Jobs</h2>
+        </div>
+
+        <!-- KNIGHT -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/KNIGHT.gif' | relative_url }}" alt="Knight">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Knight</h3>
+                <div class="job-spirit">
+                    <strong>🗡️ Espírito do Cavaleiro (ID: 3500)</strong><br>
+                    <strong>Atributo:</strong> STR +1<br>
+                    <strong>Ativação:</strong> Ao causar dano com skill física corpo-a-corpo (BF_WEAPON + BF_SHORT)<br>
+                    <strong>Efeito:</strong> Bleeding customizado<br>
+                    Dano por tick: (STR × 8), máximo 1.600/tick<br>
+                    Intervalo: baseado em AGI (min 200ms @ AGI 100)<br>
+                    Duração: 10 ticks<br>
+                    Tipo: True damage (ignora DEF/MDEF)<br>
+                    Funciona em bosses<br>
+                    <strong>Chance atual:</strong> 100% (teste; voltar para 15%)
+                </div>
+            </div>
+        </div>
+
+        <!-- CRUSADER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/CRUSADER.gif' | relative_url }}" alt="Crusader">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Crusader</h3>
+                <div class="job-spirit">
+                    <strong>🛡️ Espírito do Templário (ID: 3504)</strong><br>
+                    <strong>Atributo:</strong> VIT +1<br>
+                    <strong>Efeito ativo:</strong> Ao receber dano, 5% de chance de:<br>
+                    Reduz 50% do dano recebido<br>
+                    Efeito visual: EF_GUARD<br>
+                    <strong>Cooldown:</strong> 3 segundos
+                </div>
+            </div>
+        </div>
+
+        <!-- MONK -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/MONK.gif' | relative_url }}" alt="Monk">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Monk</h3>
+                <div class="job-spirit">
+                    <strong>👊 Espírito do Monge (ID: 3502)</strong><br>
+                    <strong>Atributo:</strong> AGI +1<br>
+                    <strong>Sistema de stacks:</strong><br>
+                    Ganha stacks: 5 hits melee (desarmado ou knuckle)<br>
+                    Máximo: 3 stacks<br>
+                    Cada stack: +10% Ignore DEF/MDEF (máx 30%)<br>
+                    Cada stack: +1 ASPD cap (+1 com 1 stack, +2 com 3 stacks)<br>
+                    ASPD: +1% ou +2% conforme stacks<br>
+                    <strong>Efeito extra:</strong><br>
+                    30% de chance de Triple Attack (nível 10 = 300%) quando desarmado/knuckle
+                </div>
+            </div>
+        </div>
+
+        <!-- PRIEST -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/PRIEST.gif' | relative_url }}" alt="Priest">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Priest</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- WIZARD -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/WIZARD.gif' | relative_url }}" alt="Wizard">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Wizard</h3>
+                <div class="job-spirit">
+                    <strong>🔮 Espírito do Bruxo (ID: 3506)</strong><br>
+                    <strong>Atributo:</strong> INT +1<br>
+                    <strong>Efeito ativo:</strong> Ao causar dano mágico, 5% de chance de:<br>
+                    Causar 50% do dano original em área 5x5<br>
+                    <strong>Cooldown:</strong> 5 segundos
+                </div>
+            </div>
+        </div>
+
+        <!-- HUNTER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/HUNTER.gif' | relative_url }}" alt="Hunter">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Hunter</h3>
+                <div class="job-spirit">
+                    <strong>🏹 Espírito do Caçador (ID: 3508)</strong><br>
+                    <strong>Atributo:</strong> DEX +2<br>
+                    <strong>Efeito ativo:</strong> Ao atacar com skill física ranged:<br>
+                    Aplica "Curse" no mob por 5 segundos<br>
+                    Ao fim: explosão (Arrow Storm + efeito 1101) em área 9x9<br>
+                    Dano: 3 multi-hits do dano acumulado<br>
+                    <strong>Cooldown:</strong> 30 segundos
+                </div>
+            </div>
+        </div>
+
+        <!-- BLACKSMITH -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/BLACKSMITH.gif' | relative_url }}" alt="Blacksmith">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Blacksmith</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ALCHEMIST -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ALCHEMIST.gif' | relative_url }}" alt="Alchemist">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Alchemist</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- BARD-DANCER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/BARD-DANCER.gif' | relative_url }}" alt="Bard/Dancer">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Bard / Dancer</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ASSASSIN -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ASSASSIN.gif' | relative_url }}" alt="Assassin">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Assassin</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ROGUE -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ROGUE.gif' | relative_url }}" alt="Rogue">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Rogue</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- SAGE -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/SAGE.gif' | relative_url }}" alt="Sage">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Sage</h3>
+                <div class="job-spirit">
+                    <strong>📚 Espírito do Sábio (ID: 3511)</strong><br>
+                    <strong>Atributo:</strong> LUK +2<br>
+                    <strong>Efeito ativo — Marca cooperativa:</strong><br>
+                    <strong>Marcar:</strong> Player A ataca mob → marca visual (1219), dura 10s<br>
+                    <strong>Ativar:</strong> Player B ataca mob marcado → dispara:<br>
+                    Falling Star (1220) + som<br>
+                    Dano fixo: 10% MaxSP do Player A (3 multi-hits, ignora DEF/MDEF)<br>
+                    Cura: 100% do dano para party em área 31x31<br>
+                    <strong>Cooldown de marca:</strong> 2 segundos por player
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel Direito - Jobs 2-2 -->
+    <div class="spirit-panel spirit-panel-right">
+        <div class="panel-header">
+            <h2>2-2 Jobs</h2>
+        </div>
+
+        <!-- Mesmas classes, mas podem ter descrições diferentes ou serem as mesmas -->
+        <!-- KNIGHT -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/KNIGHT.gif' | relative_url }}" alt="Knight">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Knight</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- CRUSADER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/CRUSADER.gif' | relative_url }}" alt="Crusader">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Crusader</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- MONK -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/MONK.gif' | relative_url }}" alt="Monk">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Monk</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- PRIEST -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/PRIEST.gif' | relative_url }}" alt="Priest">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Priest</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- WIZARD -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/WIZARD.gif' | relative_url }}" alt="Wizard">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Wizard</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- HUNTER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/HUNTER.gif' | relative_url }}" alt="Hunter">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Hunter</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- BLACKSMITH -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/BLACKSMITH.gif' | relative_url }}" alt="Blacksmith">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Blacksmith</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ALCHEMIST -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ALCHEMIST.gif' | relative_url }}" alt="Alchemist">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Alchemist</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- BARD-DANCER -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/BARD-DANCER.gif' | relative_url }}" alt="Bard/Dancer">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Bard / Dancer</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ASSASSIN -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ASSASSIN.gif' | relative_url }}" alt="Assassin">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Assassin</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- ROGUE -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/ROGUE.gif' | relative_url }}" alt="Rogue">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Rogue</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+
+        <!-- SAGE -->
+        <div class="job-entry">
+            <div class="job-gif">
+                <img src="{{ '/gifs/SAGE.gif' | relative_url }}" alt="Sage">
+            </div>
+            <div class="job-description">
+                <h3 class="job-name">Sage</h3>
+                <div class="job-spirit no-description">?</div>
+            </div>
+        </div>
+    </div>
+</div>
+
