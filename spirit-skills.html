@@ -52,19 +52,20 @@ description: Guia completo dos Espíritos das Classes
 
     .job-entry {
         display: flex;
-        gap: 3rem;
-        margin-bottom: 3rem;
-        padding: 0;
-        background: transparent;
-        border-radius: 0;
-        border: none;
-        transition: none;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        padding: 2rem;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+        border: 1px solid var(--border-primary);
+        transition: all 0.3s ease;
+        align-items: flex-start;
     }
 
     .job-entry:hover {
-        transform: none;
-        box-shadow: none;
-        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-color: var(--accent-primary);
     }
 
     .job-gif {
