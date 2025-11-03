@@ -200,16 +200,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Cavaleiro</h3>
                 <div class="job-spirit">
-                    <strong>🗡️ Espírito do Cavaleiro (ID: 3500)</strong><br>
-                    <strong>Atributo:</strong> STR +1<br>
-                    <strong>Ativação:</strong> Ao causar dano com skill física corpo-a-corpo (BF_WEAPON + BF_SHORT)<br>
-                    <strong>Efeito:</strong> Bleeding customizado<br>
-                    Dano por tick: (STR × 8), máximo 1.600/tick<br>
-                    Intervalo: baseado em AGI (min 200ms @ AGI 100)<br>
-                    Duração: 10 ticks<br>
-                    Tipo: True damage (ignora DEF/MDEF)<br>
-                    Funciona em bosses<br>
-                    <strong>Chance atual:</strong> 100% (teste; voltar para 15%)
+                    <strong>Espírito do Cavaleiro</strong><br>
+                    <strong>Mecânica:</strong> Bleeding customizado com scaling de STR/AGI<br>
+                    <strong>Trigger:</strong> Ataques físicos corpo-a-corpo<br>
+                    <strong>Efeito:</strong> Aplica Bleeding por 10 segundos (10 ticks)<br>
+                    <strong>Dano:</strong> STR × 8 por tick (máx 1.600/tick, 16.000 total) - True Damage (ignora DEF)<br>
+                    <strong>Velocidade:</strong> AGI reduz intervalo (min 200ms @ AGI 100, base 1000ms)<br>
+                    <strong>Funciona em bosses:</strong> Sim (força aplicação)
                 </div>
             </div>
         </div>
@@ -221,12 +218,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Templário</h3>
                 <div class="job-spirit">
-                    <strong>🛡️ Espírito do Templário (ID: 3504)</strong><br>
-                    <strong>Atributo:</strong> VIT +1<br>
-                    <strong>Efeito ativo:</strong> Ao receber dano, 5% de chance de:<br>
-                    Reduz 50% do dano recebido<br>
-                    Efeito visual: EF_GUARD<br>
-                    <strong>Cooldown:</strong> 3 segundos
+                    <strong>Espírito do Templário</strong><br>
+                    <strong>Mecânica:</strong> Aura defensiva automática ao receber dano<br>
+                    <strong>Trigger:</strong> HP ≤ 50%<br>
+                    <strong>Efeito:</strong> AEGIS Aura por 10s (cura aliados + dano/knockback em inimigos)<br>
+                    <strong>Cura:</strong> A cada 2s em área<br>
+                    <strong>Dano:</strong> A cada 1s em área (com knockback)<br>
+                    <strong>Cooldown:</strong> 30s após ativação
                 </div>
             </div>
         </div>
@@ -274,16 +272,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Monge</h3>
                 <div class="job-spirit">
-                    <strong>👊 Espírito do Monge (ID: 3502)</strong><br>
-                    <strong>Atributo:</strong> AGI +1<br>
-                    <strong>Sistema de stacks:</strong><br>
-                    Ganha stacks: 5 hits melee (desarmado ou knuckle)<br>
-                    Máximo: 3 stacks<br>
-                    Cada stack: +10% Ignore DEF/MDEF (máx 30%)<br>
-                    Cada stack: +1 ASPD cap (+1 com 1 stack, +2 com 3 stacks)<br>
-                    ASPD: +1% ou +2% conforme stacks<br>
-                    <strong>Efeito extra:</strong><br>
-                    30% de chance de Triple Attack (nível 10 = 300%) quando desarmado/knuckle
+                    <strong>Espírito do Monge</strong><br>
+                    <strong>Mecânica:</strong> Sistema de stacks por ataques normais<br>
+                    <strong>Trigger:</strong> Ataques básicos corpo-a-corpo (não skills)<br>
+                    <strong>Stacks:</strong> 0-3 stacks (5 hits = 1 stack)<br>
+                    <strong>Bônus por stack:</strong> +10% Ignore DEF/MDEF + ASPD<br>
+                    <strong>Máximo:</strong> 3 stacks = +30% Ignore DEF/MDEF + +2 ASPD/Cap<br>
+                    <strong>Duração:</strong> 5s (renova a cada hit)<br>
+                    <strong>Efeito visual:</strong> Efeitos 1550 + 267 com 3 stacks
                 </div>
             </div>
         </div>
@@ -298,11 +294,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Bruxo</h3>
                 <div class="job-spirit">
-                    <strong>🔮 Espírito do Bruxo (ID: 3506)</strong><br>
-                    <strong>Atributo:</strong> INT +1<br>
-                    <strong>Efeito ativo:</strong> Ao causar dano mágico, 5% de chance de:<br>
-                    Causar 50% do dano original em área 5x5<br>
-                    <strong>Cooldown:</strong> 5 segundos
+                    <strong>Espírito do Bruxo</strong><br>
+                    <strong>Mecânica:</strong> Dano elemental em área por skills mágicas<br>
+                    <strong>Trigger:</strong> Skills mágicas<br>
+                    <strong>Ciclo fixo:</strong> Lightning → Earth → Water → Fire → Lightning...<br>
+                    <strong>Área:</strong> 9×9 ao redor do alvo atingido<br>
+                    <strong>Delay:</strong> 500ms após trigger<br>
+                    <strong>Cooldown:</strong> 8s entre ativações
                 </div>
             </div>
         </div>
@@ -314,15 +312,15 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Sábio</h3>
                 <div class="job-spirit">
-                    <strong>📚 Espírito do Sábio (ID: 3511)</strong><br>
-                    <strong>Atributo:</strong> LUK +2<br>
-                    <strong>Efeito ativo — Marca cooperativa:</strong><br>
-                    <strong>Marcar:</strong> Player A ataca mob → marca visual (1219), dura 10s<br>
-                    <strong>Ativar:</strong> Player B ataca mob marcado → dispara:<br>
-                    Falling Star (1220) + som<br>
-                    Dano fixo: 10% MaxSP do Player A (3 multi-hits, ignora DEF/MDEF)<br>
-                    Cura: 100% do dano para party em área 31x31<br>
-                    <strong>Cooldown de marca:</strong> 2 segundos por player
+                    <strong>Espírito do Sábio</strong><br>
+                    <strong>Mecânica:</strong> Sistema cooperativo de marca<br>
+                    <strong>Trigger:</strong> Skill (manual) marca 1 mob<br>
+                    <strong>Marca:</strong> Dura 10s com efeito visual<br>
+                    <strong>Cooperação:</strong> Se outro player atacar o mob marcado:<br>
+                    Falling Star (meteoros)<br>
+                    Cura em área no caster original<br>
+                    <strong>Cooldown:</strong> 2s entre marcas<br>
+                    <strong>Restrição:</strong> 1 mob marcado por vez (exclusivo do caster)
                 </div>
             </div>
         </div>
@@ -337,13 +335,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Caçador</h3>
                 <div class="job-spirit">
-                    <strong>🏹 Espírito do Caçador (ID: 3508)</strong><br>
-                    <strong>Atributo:</strong> DEX +2<br>
-                    <strong>Efeito ativo:</strong> Ao atacar com skill física ranged:<br>
-                    Aplica "Curse" no mob por 5 segundos<br>
-                    Ao fim: explosão (Arrow Storm + efeito 1101) em área 9x9<br>
-                    Dano: 3 multi-hits do dano acumulado<br>
-                    <strong>Cooldown:</strong> 30 segundos
+                    <strong>Espírito do Caçador</strong><br>
+                    <strong>Mecânica:</strong> Marca com acúmulo de dano e explosão final<br>
+                    <strong>Trigger:</strong> Ataques físicos ranged<br>
+                    <strong>Efeito:</strong> Marca por 5s + Curse<br>
+                    <strong>Acúmulo:</strong> Todo dano ranged é somado<br>
+                    <strong>Explosão:</strong> Após 5s → 50% do dano acumulado em área 5×5<br>
+                    <strong>Cooldown:</strong> 30s (mas dano continua acumulando se marca já ativa)
                 </div>
             </div>
         </div>
