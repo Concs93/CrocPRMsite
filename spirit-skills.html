@@ -182,7 +182,7 @@ description: Guia completo dos Espíritos das Classes
     
     <div class="post-content">
         <header class="post-header">
-            <h1>✨ Spirit Skills</h1>
+            <h1>Espirito das classes</h1>
             <div class="post-meta">
                 <span class="post-date">📅 Conteúdo Novo</span>
             </div>
@@ -201,12 +201,11 @@ description: Guia completo dos Espíritos das Classes
                 <h3 class="job-name">Cavaleiro</h3>
                 <div class="job-spirit">
                     <strong>Espírito do Cavaleiro</strong><br>
-                    <strong>Mecânica:</strong> Bleeding customizado com scaling de STR/AGI<br>
-                    <strong>Trigger:</strong> Ataques físicos corpo-a-corpo<br>
-                    <strong>Efeito:</strong> Aplica Bleeding por 10 segundos (10 ticks)<br>
-                    <strong>Dano:</strong> STR × 8 por tick (máx 1.600/tick, 16.000 total) - True Damage (ignora DEF)<br>
-                    <strong>Velocidade:</strong> AGI reduz intervalo (min 200ms @ AGI 100, base 1000ms)<br>
-                    <strong>Funciona em bosses:</strong> Sim (força aplicação)
+                    <strong>Mecânica:</strong> Sangramento customizado com escalonamento de STR/AGI<br>
+                    <strong>Gatilho:</strong> Skills físicas corpo-a-corpo<br>
+                    <strong>Efeito:</strong> Aplica por 10-2 segundos (10 ticks)<br>
+                    <strong>Velocidade:</strong> AGI reduz intervalo de ticks do sangramento<br>
+                    <strong>Funciona em bosses:</strong> Sim
                 </div>
             </div>
         </div>
@@ -220,10 +219,10 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit">
                     <strong>Espírito do Templário</strong><br>
                     <strong>Mecânica:</strong> Aura defensiva automática ao receber dano<br>
-                    <strong>Trigger:</strong> HP ≤ 50%<br>
-                    <strong>Efeito:</strong> AEGIS Aura por 10s (cura aliados + dano/knockback em inimigos)<br>
+                    <strong>Gatilho:</strong> HP ≤ 50%<br>
+                    <strong>Efeito:</strong> Aura defensiva por 10s (cura aliados + dano em inimigos)<br>
                     <strong>Cura:</strong> A cada 2s em área<br>
-                    <strong>Dano:</strong> A cada 1s em área (com knockback)<br>
+                    <strong>Dano:</strong> A cada 1s em área (com soft pull dos mobs)<br>
                     <strong>Cooldown:</strong> 30s após ativação
                 </div>
             </div>
@@ -274,12 +273,11 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit">
                     <strong>Espírito do Monge</strong><br>
                     <strong>Mecânica:</strong> Sistema de stacks por ataques normais<br>
-                    <strong>Trigger:</strong> Ataques básicos corpo-a-corpo (não skills)<br>
+                    <strong>Gatilho:</strong> Ataques básicos corpo-a-corpo (não skills)<br>
                     <strong>Stacks:</strong> 0-3 stacks (5 hits = 1 stack)<br>
                     <strong>Bônus por stack:</strong> +10% Ignore DEF/MDEF + ASPD<br>
                     <strong>Máximo:</strong> 3 stacks = +30% Ignore DEF/MDEF + +2 ASPD/Cap<br>
                     <strong>Duração:</strong> 5s (renova a cada hit)<br>
-                    <strong>Efeito visual:</strong> Efeitos 1550 + 267 com 3 stacks
                 </div>
             </div>
         </div>
@@ -296,10 +294,9 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit">
                     <strong>Espírito do Bruxo</strong><br>
                     <strong>Mecânica:</strong> Dano elemental em área por skills mágicas<br>
-                    <strong>Trigger:</strong> Skills mágicas<br>
-                    <strong>Ciclo fixo:</strong> Lightning → Earth → Water → Fire → Lightning...<br>
+                    <strong>Gatilho:</strong> Skills mágicas<br>
+                    <strong>Ciclo fixo de dano elemental, cicla entre trovão, terra, água e fogo<br>
                     <strong>Área:</strong> 9×9 ao redor do alvo atingido<br>
-                    <strong>Delay:</strong> 500ms após trigger<br>
                     <strong>Cooldown:</strong> 8s entre ativações
                 </div>
             </div>
@@ -314,13 +311,12 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit">
                     <strong>Espírito do Sábio</strong><br>
                     <strong>Mecânica:</strong> Sistema cooperativo de marca<br>
-                    <strong>Trigger:</strong> Skill (manual) marca 1 mob<br>
+                    <strong>Gatilho:</strong> Skill marca 1 mob<br>
                     <strong>Marca:</strong> Dura 10s com efeito visual<br>
                     <strong>Cooperação:</strong> Se outro player atacar o mob marcado:<br>
-                    Falling Star (meteoros)<br>
-                    Cura em área no caster original<br>
+                    Dano baseado em SP<br>
+                    Cura em área baseado no SP<br>
                     <strong>Cooldown:</strong> 2s entre marcas<br>
-                    <strong>Restrição:</strong> 1 mob marcado por vez (exclusivo do caster)
                 </div>
             </div>
         </div>
@@ -337,11 +333,11 @@ description: Guia completo dos Espíritos das Classes
                 <div class="job-spirit">
                     <strong>Espírito do Caçador</strong><br>
                     <strong>Mecânica:</strong> Marca com acúmulo de dano e explosão final<br>
-                    <strong>Trigger:</strong> Ataques físicos ranged<br>
+                    <strong>Gatilho:</strong> Skills físicas à distância<br>
                     <strong>Efeito:</strong> Marca por 5s + Curse<br>
-                    <strong>Acúmulo:</strong> Todo dano ranged é somado<br>
+                    <strong>Acúmulo:</strong> Todo dano à distância é somado<br>
                     <strong>Explosão:</strong> Após 5s → 50% do dano acumulado em área 5×5<br>
-                    <strong>Cooldown:</strong> 30s (mas dano continua acumulando se marca já ativa)
+                    <strong>Cooldown:</strong> 30s
                 </div>
             </div>
         </div>
