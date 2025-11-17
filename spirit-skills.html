@@ -141,25 +141,6 @@ description: Guia completo dos Espíritos das Classes
         font-size: 1rem;
     }
 
-    .job-ingame-gif {
-        margin-top: 1rem;
-        width: 100%;
-        max-width: 400px;
-        border-radius: 6px;
-        overflow: hidden;
-        background: var(--bg-primary);
-        border: 1px solid var(--border-primary);
-    }
-
-    .job-ingame-gif img {
-        width: 100%;
-        height: auto;
-        display: block;
-        image-rendering: pixelated;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: crisp-edges;
-    }
-
     @media (max-width: 1400px) {
         .spirit-container {
             padding: 3rem 2rem;
@@ -235,9 +216,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Dano:</strong> AGI reduz intervalo de ticks do sangramento, STR aumenta o dano do tick.<br>
                     <strong>Funciona em bosses:</strong> Sim<br>
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/KNIGHT.gif' | relative_url }}" alt="Cavaleiro In-Game">
-                </div>
             </div>
         </div>
 
@@ -255,9 +233,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Cura:</strong> A cada 2s em área<br>
                     <strong>Dano:</strong> A cada 1s em área (com soft pull dos mobs, escalando com Ataque, HP atual e VIT)<br>
                     <strong>Cooldown:</strong> 30s após ativação<br>
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/CRUSADER.gif' | relative_url }}" alt="Templário In-Game">
                 </div>
             </div>
         </div>
@@ -279,9 +254,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Dano:</strong> Ataque com escalonamento baseado em LUK e % do HP perdido do alvo<br>
                     <strong>Cooldown:</strong> 15s
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/ASSASSIN.gif' | relative_url }}" alt="Mercenário In-Game">
-                </div>
             </div>
         </div>
 
@@ -298,9 +270,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Efeito:</strong> Ao esquivar perfeitamente, o monstro sofre um contra-ataque. Cada esquiva, garante um stack até no máximo 5. Com 5 stacks, sua próxima skill física, causará um dano bônus<br>
                     <strong>Dano:</strong> Ataque + esquiva perfeita<br>
                     <strong>Cooldown:</strong> 15s, após repressão (skill com dano bônus)<br>
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/ROGUE.gif' | relative_url }}" alt="Arruaceiro In-Game">
                 </div>
             </div>
         </div>
@@ -320,9 +289,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Gatilho:</strong> Curar<br>
                     <strong>Efeito:</strong> Ao curar a si mesmo ou a um aliado, o grupo recebe um buff que reduz em 5% o dano final recebido e aplica uma cura a cada segundo por 5 segundos<br>
                     <strong>Cooldown:</strong> 15s
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/PRIEST.gif' | relative_url }}" alt="Sacerdote In-Game">
                 </div>
             </div>
         </div>
@@ -345,9 +311,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Dano:</strong> Ataque, Ataque mágico com escalonamento de ASPD, STR e INT<br>
                     <strong>Duração:</strong> 5s (renova a cada hit)
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/MONK.gif' | relative_url }}" alt="Monge In-Game">
-                </div>
             </div>
         </div>
     </div>
@@ -368,9 +331,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Área:</strong> 9x9 ao redor do alvo atingido<br>
                     <strong>Cooldown:</strong> 8s entre ativações<br>
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/WIZARD.gif' | relative_url }}" alt="Bruxo In-Game">
-                </div>
             </div>
         </div>
 
@@ -387,9 +347,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Marca:</strong> Dura 5s com efeito visual<br>
                     <strong>Cooperação:</strong> Se outro jogador do grupo causar dano ao mob marcado, causa dano e cura o grupo (baseado em SP).<br>
                     <strong>Cooldown:</strong> 2s entre marcas (não acumula marcas provenientes de outros jogadores).<br>
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/SAGE.gif' | relative_url }}" alt="Sábio In-Game">
                 </div>
             </div>
         </div>
@@ -410,9 +367,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Efeito:</strong> Marca por 5s o mob e acumula o dano à distância causado durante esse tempo. Após os 5 segundos, causa dano em área baseado no dano acumulado.<br>
                     <strong>Cooldown:</strong> 15s<br>
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/HUNTER.gif' | relative_url }}" alt="Caçador In-Game">
-                </div>
             </div>
         </div>
 
@@ -429,9 +383,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Efeito:</strong> Aplica dreno periódico que causa dano a cada 1 segundo por 5 segundos. Cada tick de dano cura o player em 5% do dano causado pelo tick (HP e SP)<br>
                     <strong>Dano:</strong> Ataque, Ataque mágico, escalonados com STR, DEX e INT<br>
                     <strong>Cooldown:</strong> 5 segundos por monstro (apenas 1 instância por mob)
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/BARD-DANCER.gif' | relative_url }}" alt="Bardo/Odalisca In-Game">
                 </div>
             </div>
         </div>
@@ -453,9 +404,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Dano:</strong> Ataque com escalonamento baseado em STR e refino da arma<br>
                     <strong>Cooldown:</strong> 15s
                 </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/BLACKSMITH.gif' | relative_url }}" alt="Ferreiro In-Game">
-                </div>
             </div>
         </div>
 
@@ -472,9 +420,6 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Efeito:</strong> Cria uma área de pó catalisador; monstros alvejados por skills mágicas dentro da área detonam o pó, causando dano em área<br>
                     <strong>Dano:</strong> Ataque mágico com escalonamento baseado em INT<br>
                     <strong>Cooldown:</strong> 15s (campo expira em 10s ou ao gastar todas as cargas)
-                </div>
-                <div class="job-ingame-gif">
-                    <img src="{{ '/gifs/ingame/ALCHEMIST.gif' | relative_url }}" alt="Alquimista In-Game">
                 </div>
             </div>
         </div>
