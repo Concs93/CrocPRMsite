@@ -304,10 +304,12 @@ description: Guia completo dos Espíritos das Classes
                     <strong>Mecânica:</strong> Sistema de stacks por ataques normais<br>
                     <strong>Gatilho:</strong> Ataques básicos corpo-a-corpo (não skills)<br>
                     <strong>Stacks:</strong> 0-3 stacks (5 hits = 1 stack)<br>
-                    <strong>Com 1 stack:</strong> 10% Ignore DEF/MDEF, +1 ASPD e +1 ASPD limit<br>
-                    <strong>Com 2 stacks:</strong> 20% Ignore DEF/MDEF, +1 ASPD e +1 ASPD limit<br>
-                    <strong>Com 3 stacks (máximo):</strong> 30% Ignore DEF/MDEF, +2 ASPD e +2 ASPD limit<br>
-                    <strong>Duração:</strong> 5s (renova a cada hit)<br>
+                    <strong>Com 1 stack:</strong> +1 ASPD<br>
+                    <strong>Com 2 stacks:</strong> +2 ASPD<br>
+                    <strong>Com 3 stacks (máximo):</strong> +2 ASPD + explosão AoE<br>
+                    <strong>Efeito:</strong> Ao chegar em 3 stacks, dispara explosão imediata e depois, a cada 10 ataques, causa explosão novamente, área 3x3<br>
+                    <strong>Dano:</strong> Ataque, Ataque mágico com escalonamento de ASPD, STR e INT<br>
+                    <strong>Duração:</strong> 5s (renova a cada hit)
                 </div>
             </div>
         </div>
@@ -374,7 +376,14 @@ description: Guia completo dos Espíritos das Classes
             </div>
             <div class="job-description">
                 <h3 class="job-name">Bardo / Odalisca</h3>
-                <div class="job-spirit no-description">?</div>
+                <div class="job-spirit">
+                    <strong>Espírito do Bardo/Odalisca</strong><br>
+                    <strong>Mecânica:</strong> Veneno mágico aplicado em monstros com drain de HP e SP<br>
+                    <strong>Gatilho:</strong> Skill<br>
+                    <strong>Efeito:</strong> Aplica um veneno mágico que causa dano a cada 1 segundo por 5 segundos. Cada tick de dano cura o player em 5% do dano causado (HP e SP)<br>
+                    <strong>Dano:</strong> Ataque, Ataque mágico, escalonados com STR, DEX e INT<br>
+                    <strong>Cooldown:</strong> 5 segundos por monstro (apenas 1 instância por mob)
+                </div>
             </div>
         </div>
     </div>
