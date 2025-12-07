@@ -209,12 +209,15 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Cavaleiro</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Cavaleiro</strong><br>
-                    <strong>Mecânica:</strong> Sangramento customizado com escalonamento de STR/AGI<br>
-                    <strong>Gatilho:</strong> Skills físicas corpo-a-corpo<br>
-                    <strong>Efeito:</strong> Aplica por 10-2 segundos (10 ticks)<br>
-                    <strong>Dano:</strong> AGI reduz intervalo de ticks do sangramento, STR aumenta o dano do tick.<br>
-                    <strong>Funciona em bosses:</strong> Sim<br>
+                    <strong>Nome:</strong> Espírito do Cavaleiro<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Acerto de skill física corpo a corpo<br>
+                    <strong>Descrição:</strong> Aplica sangramento que causa dano periódico.<br>
+                    <strong>Fórmula do Sangramento:</strong> Base ATQ | +4% por FOR | 10 ticks<br>
+                    <strong>Duração:</strong> 3-8s (AGI reduz duração, limite em AGI 100)<br>
+                    <strong>Cooldown:</strong> 4s por monstro<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -226,13 +229,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Templário</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Templário</strong><br>
-                    <strong>Mecânica:</strong> Aura defensiva automática ao receber dano<br>
-                    <strong>Gatilho:</strong> HP ≤ 50%<br>
-                    <strong>Efeito:</strong> Aura defensiva por 10s (cura aliados + dano em inimigos)<br>
-                    <strong>Cura:</strong> A cada 2s em área<br>
-                    <strong>Dano:</strong> A cada 1s em área (com soft pull dos mobs, escalando com Ataque, HP atual e VIT)<br>
-                    <strong>Cooldown:</strong> 30s após ativação<br>
+                    <strong>Nome:</strong> Espírito do Templário<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Receber 10 hits de inimigos em até 10s<br>
+                    <strong>Descrição:</strong> Ativa a Égide que causa dano em área e cura.<br>
+                    <strong>Égide:</strong> Base 2% HP atual + ATQ | +3% por VIT | 5 ticks de 1s | área 11x11 | cura 3% HP máx/tick<br>
+                    <strong>Duração:</strong> 5s | <strong>Cooldown:</strong> 8s após terminar<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -247,12 +251,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Mercenário</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Mercenário</strong><br>
-                    <strong>Mecânica:</strong> Inflamação<br>
-                    <strong>Gatilho:</strong> Ataques básicos e skills críticas<br>
-                    <strong>Efeito:</strong> Acumula inflamação no monstro (skills acumulam 20% e ataques acumulam 5%). Ao chegar em 100%, a inflamação explode. Se não mantiver o dano em até 5s, a inflamação some.<br>
-                    <strong>Dano:</strong> Ataque com escalonamento baseado em LUK e % do HP perdido do alvo<br>
-                    <strong>Cooldown:</strong> 15s
+                    <strong>Nome:</strong> Espírito do Mercenário<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Ataque básico ou skill crítico<br>
+                    <strong>Descrição:</strong> Acumula inflamação no alvo e explode ao atingir 100 stacks.<br>
+                    <strong>Inflamação:</strong> Base 2×ATQ | +7% por SOR | 3× por %HP perdido | +5 stacks (1 arma), +10 (dual), +25 (skill) | dura 5s<br>
+                    <strong>Cooldown:</strong> 8s após explosão<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -264,12 +270,15 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Arruaceiro</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Arruaceiro</strong><br>
-                    <strong>Mecânica:</strong> Contra-ataque e repressão (não funciona com dual wield)<br>
-                    <strong>Gatilho:</strong> Esquiva perfeita<br>
-                    <strong>Efeito:</strong> Ao esquivar perfeitamente, o monstro sofre um contra-ataque. Cada esquiva, garante um stack até no máximo 5. Com 5 stacks, sua próxima skill física, causará um dano bônus<br>
-                    <strong>Dano:</strong> Ataque + esquiva perfeita<br>
-                    <strong>Cooldown:</strong> 15s, após repressão (skill com dano bônus)<br>
+                    <strong>Nome:</strong> Espírito do Arruaceiro<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Esquiva Perfeita<br>
+                    <strong>Descrição:</strong> Revida e ganha stacks; com 5, próxima skill física causa dano bônus (não funciona com dual wield).<br>
+                    <strong>Contra-ataque:</strong> Base ATQ/4 | +5% por Esquiva Perfeita<br>
+                    <strong>Golpe aprimorado:</strong> Base 4×ATQ | +20% por Esquiva Perfeita | exige 5 stacks (buff 10s)<br>
+                    <strong>Cooldown:</strong> 8s após uso ou fim do buff<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -284,11 +293,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Sacerdote</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Sacerdote</strong><br>
-                    <strong>Mecânica:</strong> Basílica<br>
-                    <strong>Gatilho:</strong> Curar<br>
-                    <strong>Efeito:</strong> Ao curar a si mesmo ou a um aliado, o grupo recebe um buff que reduz em 5% o dano final recebido e aplica uma cura a cada segundo por 5 segundos<br>
-                    <strong>Cooldown:</strong> 15s
+                    <strong>Nome:</strong> Espírito do Sacerdote<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Suporte | <strong>Alvo:</strong> Grupo<br>
+                    <strong>Gatilho:</strong> Skill de suporte<br>
+                    <strong>Descrição:</strong> Concede Abrigo que reduz dano e amplia cura.<br>
+                    <strong>Abrigo:</strong> Dura 6s | Redução de dano: 2/4/6/8/10% (níveis 1-5)<br>
+                    <strong>Fator de cura:</strong> 20/25/33/50/100% (níveis 1-5)<br>
                 </div>
             </div>
         </div>
@@ -300,16 +311,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Monge</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Monge</strong><br>
-                    <strong>Mecânica:</strong> Sistema de stacks por ataques normais<br>
-                    <strong>Gatilho:</strong> Ataques básicos corpo-a-corpo (não skills)<br>
-                    <strong>Stacks:</strong> 0-3 stacks (5 hits = 1 stack)<br>
-                    <strong>Com 1 stack:</strong> +1 ASPD<br>
-                    <strong>Com 2 stacks:</strong> +2 ASPD<br>
-                    <strong>Com 3 stacks (máximo):</strong> +2 ASPD + explosão AoE<br>
-                    <strong>Efeito:</strong> Ao chegar em 3 stacks, dispara explosão imediata e depois, a cada 10 ataques, causa explosão novamente, área 3x3<br>
-                    <strong>Dano:</strong> Ataque, Ataque mágico com escalonamento de ASPD, STR e INT<br>
-                    <strong>Duração:</strong> 5s (renova a cada hit)
+                    <strong>Nome:</strong> Espírito do Monge<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Auto-ataque corpo a corpo<br>
+                    <strong>Descrição:</strong> Gera stacks em acertos; com 3 stacks, explode em área a cada 10 hits.<br>
+                    <strong>Stacks:</strong> 1 stack +1 ASPD | 2-3 stacks +2 ASPD | duram 5s (renova ao acertar)<br>
+                    <strong>Explosão:</strong> Base ATQ + ATQM | +3% por (ASPD-100) | +1% por FOR | +1% por INT | área 3x3<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -324,12 +333,16 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Bruxo</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Bruxo</strong><br>
-                    <strong>Mecânica:</strong> Dano elemental em área por skills mágicas<br>
-                    <strong>Gatilho:</strong> Skills mágicas<br>
-                    <strong>Efeito:</strong> Ciclo fixo de dano elemental, cicla entre trovão, terra, água e fogo<br>
-                    <strong>Área:</strong> 9x9 ao redor do alvo atingido<br>
-                    <strong>Cooldown:</strong> 8s entre ativações<br>
+                    <strong>Nome:</strong> Espírito do Bruxo<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Acerto de skill mágica<br>
+                    <strong>Descrição:</strong> Cicla 3 elementos com efeitos únicos.<br>
+                    <strong>Trovão:</strong> 0,5×ATQM × (1 + INT*12%) | 6 ticks em 3s<br>
+                    <strong>Fogo:</strong> 2,5×ATQM × (1 + INT*11%) | Aplica Queima 3s<br>
+                    <strong>Gelo:</strong> 2,5×ATQM × (1 + INT*11%) | Aplica Congelar 3s<br>
+                    <strong>Ciclo:</strong> Trovão → Fogo → Gelo → Trovão... | Cooldown 8s entre elementos<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -341,12 +354,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Sábio</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Sábio</strong><br>
-                    <strong>Mecânica:</strong> Sistema cooperativo de marca<br>
-                    <strong>Trigger:</strong> Skill<br>
-                    <strong>Marca:</strong> Dura 5s com efeito visual<br>
-                    <strong>Cooperação:</strong> Se outro jogador do grupo causar dano ao mob marcado, causa dano e cura o grupo (baseado em SP).<br>
-                    <strong>Cooldown:</strong> 2s entre marcas (não acumula marcas provenientes de outros jogadores).<br>
+                    <strong>Nome:</strong> Espírito do Sábio<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Qualquer skill ou auto-ataque<br>
+                    <strong>Descrição:</strong> Marca inimigos; ao acertar o marcado, dispara Estrela Cadente.<br>
+                    <strong>Estrela Cadente:</strong> Base 0,15×SP Máx | 3 hits | ativa com hit de aliado (ou skill diferente solo)<br>
+                    <strong>Duração da marca:</strong> 10s | <strong>Cooldown:</strong> 2s entre marcas<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -361,11 +376,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Caçador</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Caçador</strong><br>
-                    <strong>Mecânica:</strong> Marca com acúmulo de dano e dano em área final<br>
-                    <strong>Gatilho:</strong> Skills físicas à distância<br>
-                    <strong>Efeito:</strong> Marca por 5s o mob e acumula o dano à distância causado durante esse tempo. Após os 5 segundos, causa dano em área baseado no dano acumulado.<br>
-                    <strong>Cooldown:</strong> 15s<br>
+                    <strong>Nome:</strong> Espírito do Caçador<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Skill física à distância<br>
+                    <strong>Descrição:</strong> Marca inimigos, acumula dano por 6s e finaliza com Chuva de Flechas.<br>
+                    <strong>Chuva de Flechas:</strong> Base 2×ATQ | +8% do dano acumulado | +20% por DES | área 5x5<br>
+                    <strong>Acúmulo:</strong> 6s | <strong>Cooldown:</strong> 6s após chuva<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -377,12 +395,13 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Bardo / Odalisca</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Bardo/Odalisca</strong><br>
-                    <strong>Mecânica:</strong> Dreno de HP e SP<br>
-                    <strong>Gatilho:</strong> Skill<br>
-                    <strong>Efeito:</strong> Aplica dreno periódico que causa dano a cada 1 segundo por 5 segundos. Cada tick de dano cura o player em 5% do dano causado pelo tick (HP e SP)<br>
-                    <strong>Dano:</strong> Ataque, Ataque mágico, escalonados com STR, DEX e INT<br>
-                    <strong>Cooldown:</strong> 5 segundos por monstro (apenas 1 instância por mob)
+                    <strong>Nome:</strong> Espírito do Bardo/Odalisca<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Qualquer skill ofensiva<br>
+                    <strong>Descrição:</strong> Aplica Dreno Mágico periódico que causa dano e cura o conjurador.<br>
+                    <strong>Dreno Mágico:</strong> Base ATQ + ATQM | +8% por (FOR+DES+INT) | 5 ticks de 1s | cura HP (Heal nv 1/3) e 1% do dano em SP por tick | não reaplica enquanto ativo<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -397,12 +416,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Ferreiro</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Ferreiro</strong><br>
-                    <strong>Mecânica:</strong> Marretada com stun em área<br>
-                    <strong>Gatilho:</strong> Skills físicas corpo-a-corpo<br>
-                    <strong>Efeito:</strong> Causa dano e aplica atordoamento em área<br>
-                    <strong>Dano:</strong> Ataque com escalonamento baseado em STR e refino da arma<br>
-                    <strong>Cooldown:</strong> 15s
+                    <strong>Nome:</strong> Espírito do Ferreiro<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Acerto de skill física corpo a corpo<br>
+                    <strong>Descrição:</strong> Invoca marreta em área 5x5 causando dano e stun.<br>
+                    <strong>Martelada:</strong> Base 2×ATQ | +5% por FOR | +30% por Refino | stun 0,5s (5x5, exceto MVPs)<br>
+                    <strong>Cooldown:</strong> 8s após descarga<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
@@ -414,12 +435,14 @@ description: Guia completo dos Espíritos das Classes
             <div class="job-description">
                 <h3 class="job-name">Alquimista</h3>
                 <div class="job-spirit">
-                    <strong>Espírito do Alquimista</strong><br>
-                    <strong>Mecânica:</strong> Pó catalisador que acumula cargas de explosão<br>
-                    <strong>Gatilho:</strong> Skills mágicas<br>
-                    <strong>Efeito:</strong> Cria uma área de pó catalisador; monstros alvejados por skills mágicas dentro da área detonam o pó, causando dano em área<br>
-                    <strong>Dano:</strong> Ataque mágico com escalonamento baseado em INT<br>
-                    <strong>Cooldown:</strong> 15s (campo expira em 10s ou ao gastar todas as cargas)
+                    <strong>Nome:</strong> Espírito do Alquimista<br>
+                    <strong>Nível Máximo:</strong> 5 | <strong>Forma:</strong> Passiva<br>
+                    <strong>Tipo:</strong> Dano Verdadeiro | <strong>Alvo:</strong> Inimigo<br>
+                    <strong>Gatilho:</strong> Skill mágica ou física à distância<br>
+                    <strong>Descrição:</strong> Cria campo de catalisador; cada célula explode quando skills são conjuradas.<br>
+                    <strong>Pó Catalisador:</strong> Base 0,5×ATQM | +5% por INT | campo 7x7 por 10s (49 células) | explosão 5x5<br>
+                    <strong>Cooldown:</strong> 15s após criar o campo<br>
+                    <strong>Escalonamento por nível (dano):</strong> 25% • 50% • 75% • 90% • 100%<br>
                 </div>
             </div>
         </div>
