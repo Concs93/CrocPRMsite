@@ -192,8 +192,15 @@
         </div>
 
         <div class="materials">
-          <div class="row" style="justify-content: space-between; margin-bottom: 8px;">
+          <div class="row" style="justify-content: space-between; margin-bottom: 8px; align-items: center;">
             <div class="pill">Materiais (estimado)</div>
+            <select id="materialsStatSelect" style="width: auto; min-width: 150px;">
+              <option value="mean">Média</option>
+              <option value="mode">Mais comum (moda)</option>
+              <option value="median">Mediana</option>
+              <option value="p75">P75%</option>
+              <option value="p90">P90%</option>
+            </select>
           </div>
           <table>
             <thead>
@@ -371,6 +378,58 @@
       return pmf;
     }
 
+    function calculateMaterialsForAttempts(policySteps, start, target, kAttempts) {
+      // Calcula materiais esperados para exatamente k tentativas
+      // Usa aproximação baseada na proporção esperada de uso por tentativa
+      const totals = expectedTotalsXY(policySteps, start, target);
+      const expAttempts = totals.expAttempts;
+      
+      if (expAttempts <= 0) return totals.expMaterials;
+      
+      // Aproximação: materiais proporcionais a k/E[T]
+      const factor = kAttempts / expAttempts;
+      const materials = {};
+      for (const [mat, cnt] of Object.entries(totals.expMaterials)) {
+        materials[mat] = cnt * factor;
+      }
+      return materials;
+    }
+
+    function getStatisticK(pmf, statType) {
+      const pmfSum = pmf.reduce((a,b) => a+b, 0);
+      const pmfNorm = pmfSum > 0 ? pmf.map(x => x / pmfSum) : pmf.slice();
+
+      if (statType === 'mean') {
+        let mean = 0;
+        for (let i = 0; i < pmfNorm.length; i++) mean += (i + 1) * pmfNorm[i];
+        return Math.ceil(mean);
+      } else if (statType === 'mode') {
+        let modeK = 1;
+        let modeP = pmfNorm[0] ?? 0;
+        for (let i = 0; i < pmfNorm.length; i++) {
+          if (pmfNorm[i] > modeP) {
+            modeP = pmfNorm[i];
+            modeK = i + 1;
+          }
+        }
+        return modeK;
+      } else {
+        const quantileK = (q) => {
+          let c = 0;
+          for (let i = 0; i < pmfNorm.length; i++) {
+            c += pmfNorm[i];
+            if (c >= q) return i + 1;
+          }
+          return pmfNorm.length;
+        };
+        
+        if (statType === 'median') return quantileK(0.5);
+        if (statType === 'p75') return quantileK(0.75);
+        if (statType === 'p90') return quantileK(0.90);
+      }
+      return null;
+    }
+
     function updateKpisMaterials() {
       const { seriesKey, policy, target, start } = getSelection();
       const policySteps = getPolicySteps(seriesKey, policy);
@@ -391,9 +450,20 @@
       document.getElementById('attemptsKpi').textContent = fmtCeilInt(totals.expAttempts);
       document.getElementById('pmfCovKpi').textContent = fmtFloat(cov);
 
+      // Obter estatística selecionada
+      const statType = document.getElementById('materialsStatSelect').value;
+      let materials = totals.expMaterials;
+      
+      if (statType !== 'mean') {
+        const kAttempts = getStatisticK(pmf, statType);
+        if (kAttempts !== null) {
+          materials = calculateMaterialsForAttempts(policySteps, start, target, kAttempts);
+        }
+      }
+
       const tbody = document.getElementById('materialsBody');
       tbody.innerHTML = '';
-      const entries = Object.entries(totals.expMaterials).sort((a,b) => a[0].localeCompare(b[0]));
+      const entries = Object.entries(materials).sort((a,b) => a[0].localeCompare(b[0]));
       for (const [mat, cnt] of entries) {
         const tr = document.createElement('tr');
         const td1 = document.createElement('td');
@@ -565,6 +635,7 @@
 
       document.getElementById('seriesSelect').addEventListener('change', refreshAll);
       document.getElementById('policySelect').addEventListener('change', refreshAll);
+      document.getElementById('materialsStatSelect').addEventListener('change', updateKpisMaterials);
       document.getElementById('targetRange').addEventListener('input', () => {
         clampStartMax();
         updateTargetPill();
