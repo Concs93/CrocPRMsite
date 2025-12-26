@@ -206,10 +206,6 @@
 
       <div class="card charts">
         <div>
-          <div class="pill">Valor esperado pra chegar em cada refino</div>
-          <canvas id="evChart" height="120"></canvas>
-        </div>
-        <div>
           <div class="pill">Chances de levar X tentativas</div>
           <canvas id="pmfChart" height="120"></canvas>
         </div>
@@ -223,7 +219,6 @@
     const fmtCeilInt = (n) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 }).format(Math.ceil(n));
 
     let DATA = null;
-    let evChart = null;
     let pmfChart = null;
 
     function buildSeriesOptions() {
@@ -411,56 +406,6 @@
       }
     }
 
-    function updateEvChart() {
-      const { seriesKey, policy, start } = getSelection();
-      const policySteps = getPolicySteps(seriesKey, policy);
-      const labels = [];
-      const zeny = [];
-      const attempts = [];
-      for (let t = 1; t <= DATA.meta.max_refine; t++) {
-        labels.push(`+${t}`);
-        if (t <= start) {
-          zeny.push(null);
-          attempts.push(null);
-        } else {
-          const totals = expectedTotalsXY(policySteps, start, t);
-          zeny.push(totals.expZeny);
-          attempts.push(totals.expAttempts);
-        }
-      }
-
-      const ctx = document.getElementById('evChart');
-      if (evChart) evChart.destroy();
-      evChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            { label: 'Zeny (valor esperado)', data: zeny, borderColor: '#7aa2ff', backgroundColor: 'rgba(122,162,255,0.15)', tension: 0.25, yAxisID: 'y' },
-            { label: 'Tentativas (valor esperado)', data: attempts, borderColor: '#b388ff', backgroundColor: 'rgba(179,136,255,0.12)', tension: 0.25, yAxisID: 'y1' }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { labels: { color: '#e7ecff' } },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ctx.dataset.label.includes('Zeny')
-                  ? ` ${ctx.dataset.label}: ${fmtCeilInt(ctx.raw)}`
-                  : ` ${ctx.dataset.label}: ${fmtCeilInt(ctx.raw)}`
-              }
-            }
-          },
-          scales: {
-            x: { ticks: { color: '#aab3d6' }, grid: { color: 'rgba(255,255,255,0.06)' } },
-            y: { ticks: { color: '#aab3d6' }, grid: { color: 'rgba(255,255,255,0.06)' } },
-            y1: { position: 'right', ticks: { color: '#aab3d6' }, grid: { drawOnChartArea: false } }
-          }
-        }
-      });
-    }
-
     function updatePmfChart() {
       const { seriesKey, policy, target, start } = getSelection();
       const policySteps = getPolicySteps(seriesKey, policy);
@@ -607,7 +552,6 @@
       updateTargetPill();
       updateStartPill();
       updateKpisMaterials();
-      updateEvChart();
       updatePmfChart();
     }
 
@@ -626,13 +570,11 @@
         updateTargetPill();
         updateKpisMaterials();
         updatePmfChart();
-        updateEvChart();
       });
       document.getElementById('startRange').addEventListener('input', () => {
         updateStartPill();
         updateKpisMaterials();
         updatePmfChart();
-        updateEvChart();
       });
     }
 
