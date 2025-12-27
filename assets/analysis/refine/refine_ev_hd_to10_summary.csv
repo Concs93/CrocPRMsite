@@ -1,8 +1,0 @@
-group,item_level,expected_attempts_total,expected_zeny_total,expected_items_broken,expected_items_used,policy_note
-Armor,1,238.178571,1854557.14,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Shadow_Armor,1,238.178571,9302071.43,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Shadow_Weapon,1,2128.589891,85547156.10,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Weapon,1,23.211685,92353.30,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Weapon,2,34.330183,233840.08,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Weapon,3,97.595238,1039876.19,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
-Weapon,4,245.102675,10395040.63,0.000000,1.000000,HD_prefer_else_Normal (per refine level 1..10)
