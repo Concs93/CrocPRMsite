@@ -1,0 +1,8 @@
+group,item_level,expected_attempts_total,expected_zeny_total,expected_items_broken,expected_items_used,policy_note
+Armor,1,243.666667,1853166.67,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Shadow_Armor,1,243.500000,9294000.00,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Shadow_Weapon,1,2130.989432,85538898.65,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Weapon,1,49.774840,92051.31,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Weapon,2,42.527330,232390.93,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Weapon,3,102.666667,1038166.67,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
+Weapon,4,248.000111,10393891.44,0.000000,1.000000,>=50% use Downgrade path else No-downgrade (fallback to available)
