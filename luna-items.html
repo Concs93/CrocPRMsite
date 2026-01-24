@@ -1,0 +1,473 @@
+---
+layout: default
+title: Itens Luna Obscura
+description: Visualização e votação dos itens Luna Obscura
+---
+
+<style>
+    .items-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .back-button-container {
+        margin-bottom: 2rem;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--bg-card) !important;
+        color: var(--accent-primary) !important;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none !important;
+        font-weight: 500;
+        font-size: 0.95rem;
+        border: 1px solid var(--border-primary);
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+        background: var(--accent-primary) !important;
+        color: white !important;
+        text-decoration: none !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(88, 166, 255, 0.3);
+    }
+
+    .page-header {
+        background: var(--bg-card) !important;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-primary);
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+
+    .page-header h1 {
+        color: var(--accent-primary) !important;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+        color: var(--text-secondary) !important;
+        font-size: 1.1rem;
+    }
+
+    .set-section {
+        background: var(--bg-card) !important;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-primary);
+        box-shadow: var(--shadow);
+    }
+
+    .set-section h2 {
+        color: var(--accent-primary) !important;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-primary);
+    }
+
+    .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .item-card {
+        background: var(--bg-secondary) !important;
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 1px solid var(--border-primary);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .item-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        border-color: var(--accent-primary);
+    }
+
+    .item-image {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        border-radius: 8px;
+        border: 2px solid var(--border-primary);
+        background: var(--bg-primary);
+        padding: 0.5rem;
+        object-fit: contain;
+    }
+
+    .item-name {
+        color: var(--text-primary) !important;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .voting-section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .vote-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .vote-btn {
+        background: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border: 2px solid var(--border-primary);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vote-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .vote-btn.positive {
+        border-color: #10b981;
+    }
+
+    .vote-btn.positive:hover,
+    .vote-btn.positive.active {
+        background: #10b981 !important;
+        color: white !important;
+        border-color: #10b981;
+    }
+
+    .vote-btn.neutral {
+        border-color: #f59e0b;
+    }
+
+    .vote-btn.neutral:hover,
+    .vote-btn.neutral.active {
+        background: #f59e0b !important;
+        color: white !important;
+        border-color: #f59e0b;
+    }
+
+    .vote-btn.negative {
+        border-color: #ef4444;
+    }
+
+    .vote-btn.negative:hover,
+    .vote-btn.negative.active {
+        background: #ef4444 !important;
+        color: white !important;
+        border-color: #ef4444;
+    }
+
+    .vote-counts {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+    }
+
+    .vote-count {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.4rem 0.8rem;
+        background: var(--bg-primary) !important;
+        border-radius: 6px;
+        border: 1px solid var(--border-primary);
+    }
+
+    .vote-count.positive {
+        color: #10b981 !important;
+    }
+
+    .vote-count.neutral {
+        color: #f59e0b !important;
+    }
+
+    .vote-count.negative {
+        color: #ef4444 !important;
+    }
+
+    .vote-count span {
+        font-weight: 600;
+    }
+
+    .standalone-section {
+        background: var(--bg-card) !important;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-primary);
+        box-shadow: var(--shadow);
+    }
+
+    .standalone-section h2 {
+        color: var(--accent-primary) !important;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-primary);
+    }
+
+    @media (max-width: 768px) {
+        .items-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .vote-buttons {
+            gap: 0.3rem;
+        }
+
+        .vote-btn {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="items-container">
+    <div class="back-button-container">
+        <a href="{{ '/' | relative_url }}" class="back-button">← Voltar para o início</a>
+    </div>
+
+    <div class="page-header">
+        <h1>🎮 Itens Luna Obscura</h1>
+        <p>Visualize os itens e vote na sua opinião sobre cada um deles</p>
+    </div>
+
+    <!-- Set Soot-Stained -->
+    <div class="set-section">
+        <h2>🧹 Set Soot-Stained</h2>
+        <div class="items-grid" id="soot-stained-set">
+            <!-- Itens serão inseridos via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Set Madlad/Brawler -->
+    <div class="set-section">
+        <h2>🍺 Set Madlad/Brawler</h2>
+        <div class="items-grid" id="madlad-set">
+            <!-- Itens serão inseridos via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Itens Individuais -->
+    <div class="standalone-section">
+        <h2>📦 Itens Individuais</h2>
+        <div class="items-grid" id="standalone-items">
+            <!-- Itens serão inseridos via JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lista de itens organizados por set
+    const items = {
+        sootStained: [
+            { name: "Soot Stained Apron", file: "Soot Stained Apron.PNG" },
+            { name: "Soot Stained Uniform", file: "Soot Stained Uniform.PNG" },
+            { name: "Soot-Stained Headress", file: "Soot-Stained Headress.PNG" }
+        ],
+        madlad: [
+            { name: "Madlad's Tankard", file: "Madlad's Tankard.PNG" },
+            { name: "Brawler's Tankard", file: "Brawler's Tankard.PNG" }
+        ],
+        standalone: [
+            { name: "Belt Whip", file: "Belt Whip.PNG" },
+            { name: "Broom Scabbard", file: "Broom Scabbard.PNG" },
+            { name: "Broomblade", file: "Broomblade.PNG" },
+            { name: "Broomlance", file: "Broomlance.PNG" },
+            { name: "Bucket Buckler", file: "Bucket Buckler.PNG" },
+            { name: "Chop Chop Chopper", file: "Chop Chop Chopper.PNG" },
+            { name: "Corroded Armguard", file: "Corroded Armguard.PNG" },
+            { name: "Crimson Bowtie", file: "Crimson Bowtie.PNG" },
+            { name: "Drudge Overrals", file: "Drudge Overrals.PNG" },
+            { name: "Ecto Reaper", file: "Ecto Reaper.PNG" },
+            { name: "Half-Digested Boots", file: "Half-Digested Boots.PNG" },
+            { name: "Helping Hand", file: "Helping Hand.PNG" },
+            { name: "Knuckle Bucket", file: "Knuckle Bucket.PNG" },
+            { name: "Last-Round Boots", file: "Last-Round Boots.PNG" },
+            { name: "Mad Drinker Stetson", file: "Mad Drinker Stetson.PNG" },
+            { name: "Old Woord 38er", file: "Old Woord 38er.PNG" },
+            { name: "Second-Hand Stiletto", file: "Second-Hand Stiletto.PNG" },
+            { name: "Sporestring Bow", file: "Sporestring Bow.PNG" },
+            { name: "Swallowed Brigandine", file: "Swallowed Brigandine.PNG" },
+            { name: "Torn Vest", file: "Torn Vest.PNG" },
+            { name: "Twin Seam-Rippers", file: "Twin Seam-Rippers.PNG" },
+            { name: "Velvet-Bound Codex", file: "Velvet-Bound Codex.PNG" },
+            { name: "Worn Maid Shoes", file: "Worn Maid Shoes.PNG" }
+        ]
+    };
+
+    // Função para obter votos do localStorage
+    function getVotes(itemName) {
+        const stored = localStorage.getItem(`luna_item_vote_${itemName}`);
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        return { positive: 0, neutral: 0, negative: 0, userVote: null };
+    }
+
+    // Função para salvar votos no localStorage
+    function saveVotes(itemName, votes) {
+        localStorage.setItem(`luna_item_vote_${itemName}`, JSON.stringify(votes));
+    }
+
+    // Função para votar
+    function vote(itemName, voteType) {
+        const votes = getVotes(itemName);
+        const previousVote = votes.userVote;
+
+        // Se já votou no mesmo tipo, remove o voto
+        if (previousVote === voteType) {
+            votes[previousVote] = Math.max(0, votes[previousVote] - 1);
+            votes.userVote = null;
+        } else {
+            // Remove voto anterior se existir
+            if (previousVote) {
+                votes[previousVote] = Math.max(0, votes[previousVote] - 1);
+            }
+            // Adiciona novo voto
+            votes[voteType]++;
+            votes.userVote = voteType;
+        }
+
+        saveVotes(itemName, votes);
+        updateItemDisplay(itemName);
+    }
+
+    // Função para criar o card do item
+    function createItemCard(item) {
+        const votes = getVotes(item.name);
+        const itemId = `item-${item.name.replace(/\s+/g, '-').toLowerCase()}`;
+        const baseUrl = '{{ "/luna_items/" | relative_url }}';
+        const imagePath = baseUrl + encodeURIComponent(item.file);
+
+        return `
+            <div class="item-card" id="${itemId}">
+                <img src="${imagePath}" alt="${item.name}" class="item-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div style="display:none; color: var(--text-secondary);">Imagem não encontrada</div>
+                <div class="item-name">${item.name}</div>
+                <div class="voting-section">
+                    <div class="vote-buttons">
+                        <button class="vote-btn positive ${votes.userVote === 'positive' ? 'active' : ''}" 
+                                onclick="vote('${item.name}', 'positive')" 
+                                title="Positivo">
+                            ✓
+                        </button>
+                        <button class="vote-btn neutral ${votes.userVote === 'neutral' ? 'active' : ''}" 
+                                onclick="vote('${item.name}', 'neutral')" 
+                                title="Neutro">
+                            ○
+                        </button>
+                        <button class="vote-btn negative ${votes.userVote === 'negative' ? 'active' : ''}" 
+                                onclick="vote('${item.name}', 'negative')" 
+                                title="Negativo">
+                            ✗
+                        </button>
+                    </div>
+                    <div class="vote-counts">
+                        <div class="vote-count positive">
+                            <span>✓</span>
+                            <span id="count-positive-${itemId}">${votes.positive}</span>
+                        </div>
+                        <div class="vote-count neutral">
+                            <span>○</span>
+                            <span id="count-neutral-${itemId}">${votes.neutral}</span>
+                        </div>
+                        <div class="vote-count negative">
+                            <span>✗</span>
+                            <span id="count-negative-${itemId}">${votes.negative}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Função para atualizar a exibição do item
+    function updateItemDisplay(itemName) {
+        const itemId = `item-${itemName.replace(/\s+/g, '-').toLowerCase()}`;
+        const votes = getVotes(itemName);
+        const card = document.getElementById(itemId);
+        
+        if (card) {
+            // Atualiza contadores
+            const positiveCount = card.querySelector(`#count-positive-${itemId}`);
+            const neutralCount = card.querySelector(`#count-neutral-${itemId}`);
+            const negativeCount = card.querySelector(`#count-negative-${itemId}`);
+            
+            if (positiveCount) positiveCount.textContent = votes.positive;
+            if (neutralCount) neutralCount.textContent = votes.neutral;
+            if (negativeCount) negativeCount.textContent = votes.negative;
+
+            // Atualiza botões
+            const positiveBtn = card.querySelector('.vote-btn.positive');
+            const neutralBtn = card.querySelector('.vote-btn.neutral');
+            const negativeBtn = card.querySelector('.vote-btn.negative');
+
+            [positiveBtn, neutralBtn, negativeBtn].forEach(btn => btn.classList.remove('active'));
+            
+            if (votes.userVote === 'positive') positiveBtn.classList.add('active');
+            if (votes.userVote === 'neutral') neutralBtn.classList.add('active');
+            if (votes.userVote === 'negative') negativeBtn.classList.add('active');
+        }
+    }
+
+    // Função para renderizar itens
+    function renderItems() {
+        const sootStainedContainer = document.getElementById('soot-stained-set');
+        const madladContainer = document.getElementById('madlad-set');
+        const standaloneContainer = document.getElementById('standalone-items');
+
+        // Renderiza set Soot-Stained
+        items.sootStained.forEach(item => {
+            sootStainedContainer.innerHTML += createItemCard(item);
+        });
+
+        // Renderiza set Madlad/Brawler
+        items.madlad.forEach(item => {
+            madladContainer.innerHTML += createItemCard(item);
+        });
+
+        // Renderiza itens individuais
+        items.standalone.forEach(item => {
+            standaloneContainer.innerHTML += createItemCard(item);
+        });
+    }
+
+    // Inicializa quando a página carregar
+    document.addEventListener('DOMContentLoaded', renderItems);
+</script>
