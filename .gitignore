@@ -1,0 +1,14 @@
+# Arquivos de votos (gerados pelo servidor)
+luna_votes.csv
+luna_votes.xlsx
+luna_votes_summary.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
