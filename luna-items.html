@@ -336,7 +336,9 @@ description: Visualização e votação dos itens Luna Obscura
     };
 
     // Configuração do servidor (ajuste a URL se necessário)
+    // Para desabilitar servidor, defina como null
     const SERVER_URL = 'http://localhost:5000';
+    const USE_SERVER = true; // Altere para false para usar apenas localStorage
     let serverSummary = {}; // Cache dos votos do servidor
     let serverAvailable = false;
 
@@ -354,20 +356,44 @@ description: Visualização e votação dos itens Luna Obscura
         }
     }
 
-    // Função para obter votos (do servidor ou fallback)
+    // Função para obter votos (do servidor ou localStorage)
     function getVotes(itemName) {
-        const serverVotes = serverSummary[itemName] || { positive: 0, neutral: 0, negative: 0 };
         const userVote = getUserVote(itemName);
-        return {
-            positive: serverVotes.positive || 0,
-            neutral: serverVotes.neutral || 0,
-            negative: serverVotes.negative || 0,
-            userVote: userVote
-        };
+        
+        // Se servidor disponível, usa dados do servidor
+        if (USE_SERVER && serverAvailable && serverSummary[itemName]) {
+            return {
+                positive: serverSummary[itemName].positive || 0,
+                neutral: serverSummary[itemName].neutral || 0,
+                negative: serverSummary[itemName].negative || 0,
+                userVote: userVote
+            };
+        }
+        
+        // Fallback: usa localStorage
+        const stored = localStorage.getItem(`luna_votes_${itemName}`);
+        if (stored) {
+            const localVotes = JSON.parse(stored);
+            return {
+                positive: localVotes.positive || 0,
+                neutral: localVotes.neutral || 0,
+                negative: localVotes.negative || 0,
+                userVote: userVote
+            };
+        }
+        
+        return { positive: 0, neutral: 0, negative: 0, userVote: userVote };
+    }
+    
+    // Função para salvar votos no localStorage (fallback)
+    function saveVotesLocal(itemName, votes) {
+        localStorage.setItem(`luna_votes_${itemName}`, JSON.stringify(votes));
     }
 
     // Função para enviar voto ao servidor
     async function sendVoteToServer(itemName, voteType, action) {
+        if (!USE_SERVER || !SERVER_URL) return false;
+        
         try {
             const response = await fetch(`${SERVER_URL}/api/vote`, {
                 method: 'POST',
@@ -390,31 +416,54 @@ description: Visualização e votação dos itens Luna Obscura
             }
             return false;
         } catch (error) {
-            console.warn('Servidor não disponível:', error);
+            // Silenciosamente falha se servidor não disponível
             return false;
         }
     }
 
     // Função para atualizar status do servidor na UI
     function updateServerStatus(available) {
+        const statusDiv = document.getElementById('server-status');
+        if (!statusDiv) return;
+        
         const indicator = document.getElementById('status-indicator');
         const text = document.getElementById('status-text');
         
+        if (!USE_SERVER || !SERVER_URL) {
+            statusDiv.style.display = 'none';
+            return;
+        }
+        
         if (available) {
             indicator.style.background = '#10b981';
-            text.textContent = 'Servidor conectado';
+            text.textContent = 'Servidor conectado - votos sincronizados';
             text.style.color = '#10b981';
         } else {
-            indicator.style.background = '#ef4444';
-            text.textContent = 'Servidor offline - votos locais apenas';
-            text.style.color = '#ef4444';
+            indicator.style.background = '#f59e0b';
+            text.textContent = 'Servidor offline - usando votos locais';
+            text.style.color = '#f59e0b';
         }
     }
 
     // Função para buscar resumo do servidor
     async function fetchServerSummary() {
+        if (!USE_SERVER || !SERVER_URL) {
+            serverAvailable = false;
+            updateServerStatus(false);
+            return false;
+        }
+        
         try {
-            const response = await fetch(`${SERVER_URL}/api/summary`);
+            // Timeout manual de 3 segundos
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            
+            const response = await fetch(`${SERVER_URL}/api/summary`, {
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.summary) {
@@ -430,7 +479,7 @@ description: Visualização e votação dos itens Luna Obscura
             updateServerStatus(false);
             return false;
         } catch (error) {
-            console.warn('Servidor não disponível:', error);
+            // Silenciosamente falha se servidor não disponível
             serverAvailable = false;
             updateServerStatus(false);
             return false;
@@ -440,24 +489,34 @@ description: Visualização e votação dos itens Luna Obscura
     // Função para votar
     async function vote(itemName, voteType) {
         const previousVote = getUserVote(itemName);
-        let action = 'add';
-        let removeAction = null;
-
+        let currentVotes = getVotes(itemName);
+        
         // Se já votou no mesmo tipo, remove o voto
         if (previousVote === voteType) {
-            action = 'remove';
+            // Remove voto
+            currentVotes[voteType] = Math.max(0, (currentVotes[voteType] || 0) - 1);
             saveUserVote(itemName, null);
+            // Tenta enviar ao servidor
             await sendVoteToServer(itemName, voteType, 'remove');
         } else {
             // Remove voto anterior se existir
             if (previousVote) {
+                currentVotes[previousVote] = Math.max(0, (currentVotes[previousVote] || 0) - 1);
                 await sendVoteToServer(itemName, previousVote, 'remove');
             }
             // Adiciona novo voto
-            await sendVoteToServer(itemName, voteType, 'add');
+            currentVotes[voteType] = (currentVotes[voteType] || 0) + 1;
             saveUserVote(itemName, voteType);
+            await sendVoteToServer(itemName, voteType, 'add');
         }
-
+        
+        // Salva localmente (fallback)
+        saveVotesLocal(itemName, {
+            positive: currentVotes.positive || 0,
+            neutral: currentVotes.neutral || 0,
+            negative: currentVotes.negative || 0
+        });
+        
         // Atualiza display
         updateItemDisplay(itemName);
     }
@@ -565,9 +624,15 @@ description: Visualização e votação dos itens Luna Obscura
     // Inicializa quando a página carregar
     document.addEventListener('DOMContentLoaded', async function() {
         renderItems();
-        // Busca votos do servidor
-        await fetchServerSummary();
-        // Atualiza a cada 5 segundos
-        setInterval(fetchServerSummary, 5000);
+        
+        // Busca votos do servidor (se habilitado)
+        if (USE_SERVER && SERVER_URL) {
+            await fetchServerSummary();
+            // Atualiza a cada 10 segundos (menos frequente para não sobrecarregar)
+            setInterval(fetchServerSummary, 10000);
+        } else {
+            // Se servidor desabilitado, esconde o indicador
+            updateServerStatus(false);
+        }
     });
 </script>
