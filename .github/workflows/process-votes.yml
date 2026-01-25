@@ -1,0 +1,32 @@
+name: Process Votes
+
+on:
+  repository_dispatch:
+    types: [new-vote]
+  workflow_dispatch:
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install openpyxl
+      
+      - name: Process votes
+        run: |
+          python .github/scripts/process_votes.py
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add luna_votes.csv luna_votes.xlsx luna_votes_summary.json
+          git diff --staged --quiet || (git commit -m "Update votes [skip ci]" && git push)

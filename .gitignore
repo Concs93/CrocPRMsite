@@ -1,7 +1,15 @@
-# Arquivos de votos (gerados pelo servidor)
+# Arquivos de votos (gerados localmente - CSV/XLSX)
 luna_votes.csv
 luna_votes.xlsx
-luna_votes_summary.json
+
+# Arquivos JSON de votos DEVEM ser commitados no GitHub
+# luna_votes_data.json - DEVE ser commitado
+# luna_votes_summary.json - DEVE ser commitado
+
+# Tokens (NUNCA commitar!)
+*token*
+*TOKEN*
+*.token
 
 # Python
 __pycache__/

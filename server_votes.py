@@ -154,11 +154,16 @@ if __name__ == '__main__':
     if HAS_XLSX:
         print(f"   - XLSX: {XLSX_FILE}")
     print(f"   - JSON: {JSON_FILE}")
-    print(f"\n🌐 Servidor rodando em: http://localhost:5000")
+    
+    # Porta do ambiente (para produção) ou 5000 (desenvolvimento)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') != 'production'
+    
+    print(f"\n🌐 Servidor rodando em: http://0.0.0.0:{port}")
     print(f"📊 Endpoints disponíveis:")
     print(f"   - POST /api/vote - Enviar voto")
     print(f"   - GET /api/summary - Obter resumo de votos")
     print(f"   - GET /api/health - Health check")
     print(f"\n⚠️  Para parar o servidor, pressione Ctrl+C\n")
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=debug)
