@@ -10,6 +10,7 @@ luna_votes.xlsx
 *token*
 *TOKEN*
 *.token
+commit_votes_to_github.py
 
 # Python
 __pycache__/

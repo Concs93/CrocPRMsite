@@ -341,11 +341,9 @@ description: Visualização e votação dos itens Luna Obscura
     const VOTES_FILE = 'luna_votes_data.json';
     const SUMMARY_FILE = 'luna_votes_summary.json';
     
-    // Para usar GitHub API, você precisa criar um Personal Access Token
-    // Vá em: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-    // Crie um token com permissão "repo" e cole aqui (ou deixe null para usar apenas localStorage)
-    // ⚠️ ATENÇÃO: Este token será visível no código-fonte do site!
-    const GITHUB_TOKEN = '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';
+    // ⚠️ Token removido por segurança - GitHub bloqueia tokens no código
+    // Vamos usar apenas localStorage e você pode processar os votos depois
+    const GITHUB_TOKEN = null; // Token não pode estar no código público
     
     let serverSummary = {}; // Cache dos votos
     let serverAvailable = false;
