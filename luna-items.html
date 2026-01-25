@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Itens Luna Obscura
-description: Visualização e votação dos itens Luna Obscura
+description: Visualização dos itens Luna Obscura
 ---
 
 <style>
@@ -42,8 +42,8 @@ description: Visualização e votação dos itens Luna Obscura
     .page-header {
         background: var(--bg-card) !important;
         border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
+        padding: 3rem;
+        margin-bottom: 3rem;
         border: 1px solid var(--border-primary);
         box-shadow: var(--shadow);
         text-align: center;
@@ -71,9 +71,9 @@ description: Visualização e votação dos itens Luna Obscura
 
     .set-section h2 {
         color: var(--accent-primary) !important;
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
         border-bottom: 2px solid var(--border-primary);
     }
 
@@ -87,13 +87,13 @@ description: Visualização e votação dos itens Luna Obscura
     .item-card {
         background: var(--bg-secondary) !important;
         border-radius: 12px;
-        padding: 1.5rem;
+        padding: 2rem;
         border: 1px solid var(--border-primary);
         transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     .item-card:hover {
@@ -121,109 +121,6 @@ description: Visualização e votação dos itens Luna Obscura
         word-wrap: break-word;
     }
 
-    .voting-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
-    }
-
-    .vote-buttons {
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .vote-btn {
-        background: var(--bg-primary) !important;
-        color: var(--text-primary) !important;
-        border: 2px solid var(--border-primary);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        min-width: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .vote-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .vote-btn.positive {
-        border-color: #10b981;
-    }
-
-    .vote-btn.positive:hover,
-    .vote-btn.positive.active {
-        background: #10b981 !important;
-        color: white !important;
-        border-color: #10b981;
-    }
-
-    .vote-btn.neutral {
-        border-color: #f59e0b;
-    }
-
-    .vote-btn.neutral:hover,
-    .vote-btn.neutral.active {
-        background: #f59e0b !important;
-        color: white !important;
-        border-color: #f59e0b;
-    }
-
-    .vote-btn.negative {
-        border-color: #ef4444;
-    }
-
-    .vote-btn.negative:hover,
-    .vote-btn.negative.active {
-        background: #ef4444 !important;
-        color: white !important;
-        border-color: #ef4444;
-    }
-
-    .vote-counts {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        font-size: 1rem;
-    }
-
-    .vote-count {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 0.4rem 0.8rem;
-        background: var(--bg-primary) !important;
-        border-radius: 6px;
-        border: 1px solid var(--border-primary);
-    }
-
-    .vote-count.positive {
-        color: #10b981 !important;
-    }
-
-    .vote-count.neutral {
-        color: #f59e0b !important;
-    }
-
-    .vote-count.negative {
-        color: #ef4444 !important;
-    }
-
-    .vote-count span {
-        font-weight: 600;
-    }
-
     .standalone-section {
         background: var(--bg-card) !important;
         border-radius: 12px;
@@ -245,15 +142,6 @@ description: Visualização e votação dos itens Luna Obscura
         .items-grid {
             grid-template-columns: 1fr;
         }
-
-        .vote-buttons {
-            gap: 0.3rem;
-        }
-
-        .vote-btn {
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-        }
     }
 </style>
 
@@ -264,11 +152,7 @@ description: Visualização e votação dos itens Luna Obscura
 
     <div class="page-header">
         <h1>🎮 Itens Luna Obscura</h1>
-        <p>Visualize os itens e vote na sua opinião sobre cada um deles</p>
-        <div id="server-status" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--bg-secondary); border-radius: 6px; display: inline-block;">
-            <span id="status-indicator" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; margin-right: 0.5rem;"></span>
-            <span id="status-text" style="color: var(--text-secondary); font-size: 0.9rem;">Conectando ao servidor...</span>
-        </div>
+        <p>Visualize os itens disponíveis</p>
     </div>
 
     <!-- Set Soot-Stained -->
@@ -335,297 +219,8 @@ description: Visualização e votação dos itens Luna Obscura
         ]
     };
 
-    // Configuração GitHub
-    const GITHUB_REPO = 'concs93/CrocPRMsite';
-    const GITHUB_BRANCH = 'main';
-    const VOTES_FILE = 'luna_votes_data.json';
-    const SUMMARY_FILE = 'luna_votes_summary.json';
-    
-    // ⚠️ Token removido por segurança - GitHub bloqueia tokens no código
-    // Vamos usar apenas localStorage e você pode processar os votos depois
-    const GITHUB_TOKEN = null; // Token não pode estar no código público
-    
-    let serverSummary = {}; // Cache dos votos
-    let serverAvailable = false;
-
-    // Função para obter voto do usuário do localStorage
-    function getUserVote(itemName) {
-        return localStorage.getItem(`luna_user_vote_${itemName}`);
-    }
-
-    // Função para salvar voto do usuário no localStorage
-    function saveUserVote(itemName, voteType) {
-        if (voteType) {
-            localStorage.setItem(`luna_user_vote_${itemName}`, voteType);
-        } else {
-            localStorage.removeItem(`luna_user_vote_${itemName}`);
-        }
-    }
-
-    // Função para obter votos (do GitHub ou localStorage)
-    function getVotes(itemName) {
-        const userVote = getUserVote(itemName);
-        
-        // Se GitHub disponível, usa dados do GitHub
-        if (serverAvailable && serverSummary[itemName]) {
-            return {
-                positive: serverSummary[itemName].positive || 0,
-                neutral: serverSummary[itemName].neutral || 0,
-                negative: serverSummary[itemName].negative || 0,
-                userVote: userVote
-            };
-        }
-        
-        // Fallback: usa localStorage
-        const stored = localStorage.getItem(`luna_votes_${itemName}`);
-        if (stored) {
-            const localVotes = JSON.parse(stored);
-            return {
-                positive: localVotes.positive || 0,
-                neutral: localVotes.neutral || 0,
-                negative: localVotes.negative || 0,
-                userVote: userVote
-            };
-        }
-        
-        return { positive: 0, neutral: 0, negative: 0, userVote: userVote };
-    }
-    
-    // Função para salvar votos no localStorage (fallback)
-    function saveVotesLocal(itemName, votes) {
-        localStorage.setItem(`luna_votes_${itemName}`, JSON.stringify(votes));
-    }
-
-    // Função para salvar voto no GitHub
-    async function saveVoteToGitHub(itemName, voteType, action) {
-        if (!GITHUB_TOKEN) return false;
-        
-        try {
-            // Busca arquivo atual
-            const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${VOTES_FILE}`;
-            const fileResponse = await fetch(fileUrl, {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-            
-            let currentContent = [];
-            let sha = null;
-            
-            if (fileResponse.ok) {
-                const fileData = await fileResponse.json();
-                sha = fileData.sha;
-                const content = atob(fileData.content.replace(/\n/g, ''));
-                currentContent = JSON.parse(content);
-            }
-            
-            // Adiciona novo voto
-            currentContent.push({
-                timestamp: new Date().toISOString(),
-                item_name: itemName,
-                vote_type: voteType,
-                action: action
-            });
-            
-            // Atualiza resumo
-            updateSummaryFromVotes(currentContent);
-            
-            // Salva arquivo
-            const content = btoa(JSON.stringify(currentContent, null, 2));
-            const updateResponse = await fetch(fileUrl, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Vote: ${itemName} - ${voteType} (${action})`,
-                    content: content,
-                    sha: sha,
-                    branch: GITHUB_BRANCH
-                })
-            });
-            
-            if (updateResponse.ok) {
-                // Atualiza resumo também
-                await updateSummaryFile();
-                return true;
-            }
-            return false;
-        } catch (error) {
-            console.warn('Erro ao salvar no GitHub:', error);
-            return false;
-        }
-    }
-    
-    // Função para atualizar resumo a partir dos votos
-    function updateSummaryFromVotes(votes) {
-        const summary = {};
-        
-        votes.forEach(vote => {
-            const item = vote.item_name;
-            if (!summary[item]) {
-                summary[item] = { positive: 0, neutral: 0, negative: 0 };
-            }
-            
-            if (vote.action === 'add') {
-                summary[item][vote.vote_type] = (summary[item][vote.vote_type] || 0) + 1;
-            } else if (vote.action === 'remove') {
-                summary[item][vote.vote_type] = Math.max(0, (summary[item][vote.vote_type] || 0) - 1);
-            }
-        });
-        
-        serverSummary = summary;
-    }
-    
-    // Função para atualizar arquivo de resumo
-    async function updateSummaryFile() {
-        if (!GITHUB_TOKEN) return false;
-        
-        try {
-            const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SUMMARY_FILE}`;
-            
-            // Busca SHA se arquivo existe
-            let sha = null;
-            const checkResponse = await fetch(fileUrl, {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-            
-            if (checkResponse.ok) {
-                const fileData = await checkResponse.json();
-                sha = fileData.sha;
-            }
-            
-            // Salva resumo
-            const content = btoa(JSON.stringify(serverSummary, null, 2));
-            const updateResponse = await fetch(fileUrl, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Update votes summary',
-                    content: content,
-                    sha: sha,
-                    branch: GITHUB_BRANCH
-                })
-            });
-            
-            return updateResponse.ok;
-        } catch (error) {
-            return false;
-        }
-    }
-    
-    // Função para buscar resumo do GitHub
-    async function fetchSummaryFromGitHub() {
-        if (!GITHUB_TOKEN) {
-            // Tenta buscar sem autenticação (pode funcionar se arquivo for público)
-            try {
-                const url = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${SUMMARY_FILE}`;
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data = await response.json();
-                    serverSummary = data;
-                    serverAvailable = true;
-                    updateServerStatus(true);
-                    updateAllItemsDisplay();
-                    return true;
-                }
-            } catch (error) {
-                // Ignora erro
-            }
-            return false;
-        }
-        
-        try {
-            const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SUMMARY_FILE}`;
-            const response = await fetch(fileUrl, {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-            
-            if (response.ok) {
-                const fileData = await response.json();
-                const content = atob(fileData.content.replace(/\n/g, ''));
-                serverSummary = JSON.parse(content);
-                serverAvailable = true;
-                updateServerStatus(true);
-                updateAllItemsDisplay();
-                return true;
-            }
-            return false;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    // Função para atualizar status na UI
-    function updateServerStatus(available) {
-        const statusDiv = document.getElementById('server-status');
-        if (!statusDiv) return;
-        
-        const indicator = document.getElementById('status-indicator');
-        const text = document.getElementById('status-text');
-        
-        if (available) {
-            indicator.style.background = '#10b981';
-            text.textContent = 'GitHub conectado - votos sincronizados';
-            text.style.color = '#10b981';
-        } else {
-            indicator.style.background = '#f59e0b';
-            text.textContent = 'GitHub offline - usando votos locais';
-            text.style.color = '#f59e0b';
-        }
-    }
-
-    // Função para votar
-    async function vote(itemName, voteType) {
-        const previousVote = getUserVote(itemName);
-        let currentVotes = getVotes(itemName);
-        
-        // Se já votou no mesmo tipo, remove o voto
-        if (previousVote === voteType) {
-            // Remove voto
-            currentVotes[voteType] = Math.max(0, (currentVotes[voteType] || 0) - 1);
-            saveUserVote(itemName, null);
-            // Tenta salvar no GitHub
-            await saveVoteToGitHub(itemName, voteType, 'remove');
-        } else {
-            // Remove voto anterior se existir
-            if (previousVote) {
-                currentVotes[previousVote] = Math.max(0, (currentVotes[previousVote] || 0) - 1);
-                await saveVoteToGitHub(itemName, previousVote, 'remove');
-            }
-            // Adiciona novo voto
-            currentVotes[voteType] = (currentVotes[voteType] || 0) + 1;
-            saveUserVote(itemName, voteType);
-            await saveVoteToGitHub(itemName, voteType, 'add');
-        }
-        
-        // Salva localmente (fallback)
-        saveVotesLocal(itemName, {
-            positive: currentVotes.positive || 0,
-            neutral: currentVotes.neutral || 0,
-            negative: currentVotes.negative || 0
-        });
-        
-        // Atualiza display
-        updateItemDisplay(itemName);
-    }
-
     // Função para criar o card do item
     function createItemCard(item) {
-        const votes = getVotes(item.name);
         const itemId = `item-${item.name.replace(/\s+/g, '-').toLowerCase()}`;
         const baseUrl = '{{ "/luna_items/" | relative_url }}';
         const imagePath = baseUrl + encodeURIComponent(item.file);
@@ -635,70 +230,8 @@ description: Visualização e votação dos itens Luna Obscura
                 <img src="${imagePath}" alt="${item.name}" class="item-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                 <div style="display:none; color: var(--text-secondary);">Imagem não encontrada</div>
                 <div class="item-name">${item.name}</div>
-                <div class="voting-section">
-                    <div class="vote-buttons">
-                        <button class="vote-btn positive ${votes.userVote === 'positive' ? 'active' : ''}" 
-                                onclick="vote('${item.name}', 'positive')" 
-                                title="Positivo">
-                            ✓
-                        </button>
-                        <button class="vote-btn neutral ${votes.userVote === 'neutral' ? 'active' : ''}" 
-                                onclick="vote('${item.name}', 'neutral')" 
-                                title="Neutro">
-                            ○
-                        </button>
-                        <button class="vote-btn negative ${votes.userVote === 'negative' ? 'active' : ''}" 
-                                onclick="vote('${item.name}', 'negative')" 
-                                title="Negativo">
-                            ✗
-                        </button>
-                    </div>
-                    <div class="vote-counts">
-                        <div class="vote-count positive">
-                            <span>✓</span>
-                            <span id="count-positive-${itemId}">${votes.positive}</span>
-                        </div>
-                        <div class="vote-count neutral">
-                            <span>○</span>
-                            <span id="count-neutral-${itemId}">${votes.neutral}</span>
-                        </div>
-                        <div class="vote-count negative">
-                            <span>✗</span>
-                            <span id="count-negative-${itemId}">${votes.negative}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         `;
-    }
-
-    // Função para atualizar a exibição do item
-    function updateItemDisplay(itemName) {
-        const itemId = `item-${itemName.replace(/\s+/g, '-').toLowerCase()}`;
-        const votes = getVotes(itemName);
-        const card = document.getElementById(itemId);
-        
-        if (card) {
-            // Atualiza contadores
-            const positiveCount = card.querySelector(`#count-positive-${itemId}`);
-            const neutralCount = card.querySelector(`#count-neutral-${itemId}`);
-            const negativeCount = card.querySelector(`#count-negative-${itemId}`);
-            
-            if (positiveCount) positiveCount.textContent = votes.positive;
-            if (neutralCount) neutralCount.textContent = votes.neutral;
-            if (negativeCount) negativeCount.textContent = votes.negative;
-
-            // Atualiza botões
-            const positiveBtn = card.querySelector('.vote-btn.positive');
-            const neutralBtn = card.querySelector('.vote-btn.neutral');
-            const negativeBtn = card.querySelector('.vote-btn.negative');
-
-            [positiveBtn, neutralBtn, negativeBtn].forEach(btn => btn.classList.remove('active'));
-            
-            if (votes.userVote === 'positive') positiveBtn.classList.add('active');
-            if (votes.userVote === 'neutral') neutralBtn.classList.add('active');
-            if (votes.userVote === 'negative') negativeBtn.classList.add('active');
-        }
     }
 
     // Função para renderizar itens
@@ -724,12 +257,5 @@ description: Visualização e votação dos itens Luna Obscura
     }
 
     // Inicializa quando a página carregar
-    document.addEventListener('DOMContentLoaded', async function() {
-        renderItems();
-        
-        // Busca resumo do GitHub
-        await fetchSummaryFromGitHub();
-        // Atualiza a cada 30 segundos
-        setInterval(fetchSummaryFromGitHub, 30000);
-    });
+    document.addEventListener('DOMContentLoaded', renderItems);
 </script>
