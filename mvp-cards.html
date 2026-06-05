@@ -1,0 +1,499 @@
+---
+layout: page
+title: MVP Cards Review
+description: Avalie e comente as cartas de MVP do CrocPRM. Votos anônimos e agregados.
+permalink: /mvp-cards/
+---
+
+<style>
+  .mvp-page { background:#15171c; color:#e8e8e8; font-family:system-ui,-apple-system,sans-serif; padding:16px; border-radius:8px }
+  .mvp-page h1 { color:#ffd84a; font-size:20px; margin:0 0 6px }
+  .mvp-lede { color:#a8acb5; font-size:13px; line-height:1.5; margin-bottom:14px }
+  .mvp-lgpd { background:#1f2128; border-left:3px solid #2a72c9; padding:10px 14px; margin:12px 0 18px; font-size:12px; color:#a8acb5; line-height:1.5 }
+  .mvp-lgpd strong { color:#e8e8e8 }
+
+  .mvp-controls { background:#1f2128; padding:10px 14px; border-radius:6px; margin-bottom:14px }
+  .mvp-controls-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center }
+  .mvp-controls input, .mvp-controls select, .mvp-controls button {
+    padding:5px 10px; font-size:12px; background:#2a2d36; border:1px solid #444; color:#e8e8e8; border-radius:3px
+  }
+  .mvp-controls input::placeholder { color:#666 }
+  .mvp-controls button { cursor:pointer }
+  .mvp-controls button:hover { background:#3a3d46 }
+  .mvp-stats { color:#a8acb5; font-size:12px; margin-left:6px }
+  .mvp-progress { color:#ffd84a; font-size:12px; margin-left:6px }
+
+  .mvp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px }
+  .mvp-card {
+    background:#f3ead4; border:1px solid #7a6a3a; border-radius:4px; color:#1a1408;
+    font-size:12px; line-height:1.45; font-family:'Segoe UI',Tahoma,sans-serif;
+    display:flex; flex-direction:column; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.3)
+  }
+  .mvp-card.rated { box-shadow:0 0 0 2px var(--rated-color,transparent),0 2px 6px rgba(0,0,0,0.3) }
+  .mvp-card .title {
+    background:#3a3326; color:#ffd84a; padding:5px 9px; font-weight:bold; font-size:13px;
+    display:flex; justify-content:space-between; align-items:baseline; gap:8px
+  }
+  .mvp-card .title .id { color:#aaa; font-weight:normal; font-size:10.5px }
+  .mvp-card .body { padding:7px 9px; flex:1; min-height:60px }
+  .mvp-card .footer {
+    background:#e2d6b4; color:#5a4a20; padding:4px 9px; font-size:10.5px;
+    display:flex; flex-wrap:wrap; gap:6px; border-top:1px solid #c7b78a
+  }
+  .mvp-card .footer .pill { background:#fff8e0; border:1px solid #c0a060; padding:0 5px; border-radius:8px }
+  .mvp-card .footer .pill.slot { background:#dfeeff; border-color:#5a8ab0; color:#234060; font-weight:600 }
+  .empty-desc { color:#888; font-style:italic }
+
+  .mvp-drops { margin-top:6px; font-size:10.5px; color:#3a2e16 }
+  .mvp-drops .lab { color:#7a6a3a; font-size:10px; text-transform:uppercase; letter-spacing:0.5px }
+  .mvp-drops .mvp { font-weight:bold; color:#7a2400 }
+
+  details.scriptbox { margin-top:6px; font-size:10.5px; color:#3a2e16 }
+  details.scriptbox summary { cursor:pointer; color:#5a4a20 }
+  details.scriptbox pre { background:#fff8e0; border:1px solid #c0a060; padding:4px 6px; border-radius:3px; margin:4px 0 0; white-space:pre-wrap; word-break:break-word; font-family:Consolas,monospace; font-size:10.5px }
+
+  .rating { display:flex; gap:4px; padding:6px 9px; background:#e2d6b4; border-top:1px solid #c7b78a }
+  .rating button {
+    flex:1; padding:5px 4px; font-size:10.5px; font-weight:600;
+    border:1px solid #8a7a3a; background:#fff8e0; color:#3a2e16;
+    border-radius:3px; cursor:pointer; transition:all 0.1s
+  }
+  .rating button:hover { background:#fff; transform:translateY(-1px) }
+  .rating button.active { color:#fff; border-color:transparent; box-shadow:inset 0 -2px 0 rgba(0,0,0,0.2) }
+  .rating button.active.useless { background:#6b6b6b }
+  .rating button.active.weak { background:#b97a3a }
+  .rating button.active.ok { background:#3a8fb9 }
+  .rating button.active.strong { background:#3aa84a }
+  .rating button.active.meta { background:#c63ad8 }
+  .rating button.clear { flex:0 0 auto; padding:5px 8px; font-weight:400; color:#7a6a3a }
+
+  .aggregate { padding:6px 9px; background:#fff8e0; border-top:1px solid #c7b78a; font-size:10.5px; color:#3a2e16 }
+  .aggregate .total { color:#7a6a3a; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; display:flex; justify-content:space-between }
+  .aggregate .bars { display:flex; height:8px; border-radius:2px; overflow:hidden; background:#d4c896 }
+  .aggregate .bar { height:100%; transition:width 0.3s }
+  .aggregate .bar.useless { background:#6b6b6b }
+  .aggregate .bar.weak { background:#b97a3a }
+  .aggregate .bar.ok { background:#3a8fb9 }
+  .aggregate .bar.strong { background:#3aa84a }
+  .aggregate .bar.meta { background:#c63ad8 }
+  .aggregate .counts { display:flex; justify-content:space-between; margin-top:3px; font-size:9.5px; color:#7a6a3a }
+  .aggregate .counts span { flex:1; text-align:center }
+
+  .comments { padding:6px 9px; background:#fff8e0; border-top:1px solid #c7b78a; font-size:11px; color:#3a2e16 }
+  .comments summary { cursor:pointer; color:#5a4a20; font-size:10.5px; user-select:none }
+  .comments-form { margin-top:6px; display:flex; flex-direction:column; gap:4px }
+  .comments-form input, .comments-form textarea {
+    border:1px solid #c0a060; background:#fff; padding:4px 6px; font-size:11px; border-radius:3px; font-family:inherit
+  }
+  .comments-form textarea { resize:vertical; min-height:48px }
+  .comments-form .row { display:flex; gap:4px; align-items:center; justify-content:space-between }
+  .comments-form .row button {
+    background:#8a7a3a; color:#fff; border:none; padding:4px 10px; font-size:11px; border-radius:3px; cursor:pointer
+  }
+  .comments-form .row button:hover { background:#7a6a3a }
+  .comments-form .row .char { font-size:10px; color:#7a6a3a }
+  .comments-list { margin-top:6px; display:flex; flex-direction:column; gap:4px; max-height:180px; overflow-y:auto }
+  .comments-list .item { background:#fff8e0; border:1px solid #c0a060; padding:4px 8px; border-radius:3px }
+  .comments-list .item .meta { font-size:9.5px; color:#7a6a3a; margin-bottom:2px }
+  .comments-list .item .meta b { color:#5a4a20 }
+  .comments-list .empty { color:#888; font-style:italic; font-size:11px; padding:4px 0 }
+
+  .pager { display:flex; justify-content:center; gap:8px; padding:14px; color:#a8acb5 }
+  .pager button { background:#1f2128; border:1px solid #444; color:#e8e8e8; padding:4px 10px; border-radius:3px; cursor:pointer; font-size:12px }
+  .pager button:disabled { opacity:0.4; cursor:not-allowed }
+  .pager .info { padding:4px 0 }
+
+  .mvp-loading { color:#a8acb5; padding:24px; text-align:center; font-size:13px }
+  .mvp-error { background:#3a1818; border-left:3px solid #d4322c; padding:10px 14px; margin:12px 0; color:#fdd; font-size:12px }
+</style>
+
+<div class="mvp-page">
+  <h1>MVP Cards Review — CrocPRM</h1>
+  <div class="mvp-lede">
+    Avalie cada carta de MVP de <b>Useless</b> a <b>Meta Definer</b>. Compartilha sua opinião com a comunidade —
+    o agregado fica visível pra todos e atualiza a cada minuto.
+  </div>
+
+  <div class="mvp-lgpd">
+    <strong>Aviso de privacidade.</strong> Os votos são <b>anônimos</b> e armazenados como contadores agregados —
+    não identificamos quem votou no quê. Comentários ficam públicos; o nome é opcional (vazio aparece como "Anônimo").
+    Não coletamos email, IP ou outras informações pessoais. Pra solicitar remoção de comentário, contato no Discord.
+  </div>
+
+  <div class="mvp-controls">
+    <div class="mvp-controls-row">
+      <input id="q" placeholder="buscar (nome / descrição / MVP)" size="32">
+      <select id="slot_filter">
+        <option value="">todos slots</option>
+        <option value="Weapon">Weapon</option>
+        <option value="Shield">Shield</option>
+        <option value="Armor">Armor</option>
+        <option value="Headgear">Headgear</option>
+        <option value="Garment">Garment</option>
+        <option value="Shoes">Shoes</option>
+        <option value="Accessory">Accessory</option>
+      </select>
+      <select id="rating_filter">
+        <option value="">todas avaliações</option>
+        <option value="unrated">não avaliei ainda</option>
+        <option value="rated">já avaliei</option>
+        <option value="useless">Useless</option>
+        <option value="weak">Weak</option>
+        <option value="ok">Ok</option>
+        <option value="strong">Strong</option>
+        <option value="meta">Meta Definer</option>
+      </select>
+      <select id="sort">
+        <option value="id">ordem: ID</option>
+        <option value="name">ordem: nome</option>
+        <option value="rate">ordem: drop rate</option>
+        <option value="mvp_lvl_asc">ordem: lvl MVP (asc)</option>
+        <option value="mvp_lvl_desc">ordem: lvl MVP (desc)</option>
+        <option value="votes_desc">ordem: mais votadas</option>
+      </select>
+      <select id="page_size">
+        <option value="30">30 / página</option>
+        <option value="60">60 / página</option>
+        <option value="999">tudo</option>
+      </select>
+      <span class="mvp-stats" id="stats"></span>
+      <span class="mvp-progress" id="progress"></span>
+    </div>
+  </div>
+
+  <div id="mvp-error-box"></div>
+  <div id="mvp-loading" class="mvp-loading">Carregando cartas e votos…</div>
+  <div id="grid" class="mvp-grid" style="display:none"></div>
+  <div class="pager" id="pager" style="display:none">
+    <button id="prev">‹ Prev</button>
+    <span class="info" id="pageinfo"></span>
+    <button id="next">Next ›</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ============================================================
+// MVP Cards Voting — frontend
+// ============================================================
+const SUPABASE_URL = "https://jtheifcuwywvfjdejxjc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_a6BFgtLIC3I-kFchop46bA_utqimdYH";
+const DATA_URL = "{{ '/mvp_cards_data.json' | relative_url }}";
+
+const STORAGE_KEY = 'mvp_review_v2';
+const RATINGS = ['useless','weak','ok','strong','meta'];
+const RATING_LABELS = {useless:'Useless',weak:'Weak',ok:'Ok',strong:'Strong',meta:'Meta'};
+const RATING_COLORS = {useless:'#6b6b6b',weak:'#b97a3a',ok:'#3a8fb9',strong:'#3aa84a',meta:'#c63ad8'};
+const RATING_ORDER = {useless:0,weak:1,ok:2,strong:3,meta:4};
+const POLL_INTERVAL_MS = 60000;
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let DATA = [];                                    // card list
+let aggregate = {};                                // { card_id: {useless,weak,ok,strong,meta} }
+let commentsCache = {};                            // { card_id: [comments] }
+let ratings = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+let cur = [];
+let page = 0;
+let pageSize = 30;
+
+const grid = document.getElementById('grid');
+const stats = document.getElementById('stats');
+const progress = document.getElementById('progress');
+const pageinfo = document.getElementById('pageinfo');
+const errorBox = document.getElementById('mvp-error-box');
+const loadingBox = document.getElementById('mvp-loading');
+
+function showError(msg) {
+  errorBox.innerHTML = `<div class="mvp-error">${msg}</div>`;
+}
+
+function saveRatings() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ratings));
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = DATA.length;
+  let rated = 0;
+  for (const id in ratings) if (ratings[id]) rated++;
+  progress.innerHTML = `<b>${rated}/${total}</b> avaliei`;
+}
+
+// ── Supabase calls ───────────────────────────────────────────
+async function loadAggregate() {
+  const { data, error } = await sb.from('mvp_aggregate').select('*');
+  if (error) { showError('Falha ao buscar agregado: ' + error.message); return; }
+  aggregate = {};
+  for (const row of (data || [])) aggregate[row.card_id] = row;
+  // Re-render current page to reflect updated counts
+  render();
+}
+
+async function voteAdd(cardId, rating) {
+  const { error } = await sb.rpc('vote_add', { p_card_id: cardId, p_rating: rating });
+  if (error) showError('Falha ao votar: ' + error.message);
+}
+async function voteRemove(cardId, rating) {
+  const { error } = await sb.rpc('vote_remove', { p_card_id: cardId, p_rating: rating });
+  if (error) showError('Falha ao remover voto: ' + error.message);
+}
+
+async function loadComments(cardId) {
+  const { data, error } = await sb
+    .from('mvp_comments')
+    .select('content,username,created_at')
+    .eq('card_id', cardId)
+    .order('created_at', { ascending: false })
+    .limit(50);
+  if (error) { showError('Falha ao buscar comentários: ' + error.message); return []; }
+  commentsCache[cardId] = data || [];
+  return data || [];
+}
+
+async function postComment(cardId, content, username) {
+  const payload = { card_id: cardId, content };
+  if (username && username.trim()) payload.username = username.trim().slice(0, 32);
+  const { error } = await sb.from('mvp_comments').insert(payload);
+  if (error) { showError('Falha ao enviar comentário: ' + error.message); return false; }
+  return true;
+}
+
+// ── Rendering ────────────────────────────────────────────────
+function dropsHtml(mvps) {
+  if (!mvps || !mvps.length) return '';
+  return `<div class="mvp-drops"><div class="lab">Dropa de (MVP)</div>` +
+    mvps.map(d => `<div class="mvp">${d.name} (lvl ${d.lvl}) — ${d.rate.toFixed(3)}%</div>`).join('') +
+    `</div>`;
+}
+
+function scriptHtml(script) {
+  if (!script || !script.trim()) return '';
+  return `<details class="scriptbox"><summary>script</summary><pre>${script.replace(/</g,'&lt;')}</pre></details>`;
+}
+
+function footerHtml(r) {
+  const pills = [`<span class="pill">${r.n_mvps} MVP${r.n_mvps>1?'s':''}</span>`];
+  (r.slots||[]).forEach(s => pills.push(`<span class="pill slot">${s}</span>`));
+  if (r.aegis) pills.push(`<span class="pill">${r.aegis}</span>`);
+  return `<div class="footer">${pills.join('')}</div>`;
+}
+
+function ratingHtml(r) {
+  const current = ratings[r.id] || '';
+  const btns = RATINGS.map(rk => {
+    const cls = (current === rk) ? `active ${rk}` : '';
+    return `<button data-id="${r.id}" data-rating="${rk}" class="${cls}">${RATING_LABELS[rk]}</button>`;
+  }).join('');
+  const clear = `<button data-id="${r.id}" data-rating="" class="clear" title="limpar voto">✕</button>`;
+  return `<div class="rating">${btns}${clear}</div>`;
+}
+
+function aggregateHtml(cardId) {
+  const a = aggregate[cardId] || {useless:0,weak:0,ok:0,strong:0,meta:0};
+  const total = a.useless + a.weak + a.ok + a.strong + a.meta;
+  if (total === 0) {
+    return `<div class="aggregate"><div class="total"><span>Sem votos ainda</span><span>seja o primeiro!</span></div></div>`;
+  }
+  const pct = r => (100 * a[r] / total).toFixed(1);
+  const bars = RATINGS.map(r => `<div class="bar ${r}" style="width:${pct(r)}%"></div>`).join('');
+  const counts = RATINGS.map(r => `<span title="${RATING_LABELS[r]}: ${a[r]} (${pct(r)}%)">${a[r]}</span>`).join('');
+  return `<div class="aggregate">
+    <div class="total"><span>Comunidade</span><span><b>${total}</b> voto${total>1?'s':''}</span></div>
+    <div class="bars">${bars}</div>
+    <div class="counts">${counts}</div>
+  </div>`;
+}
+
+function commentsHtml(cardId) {
+  return `<div class="comments">
+    <details>
+      <summary>💬 Comentários</summary>
+      <div class="comments-form">
+        <input type="text" placeholder="Seu nome (opcional, vazio = Anônimo)" maxlength="32" data-id="${cardId}" class="cm-name">
+        <textarea placeholder="Escreve um comentário (até 500 caracteres)…" maxlength="500" data-id="${cardId}" class="cm-text"></textarea>
+        <div class="row">
+          <span class="char"><span class="cm-charcount" data-id="${cardId}">0</span>/500</span>
+          <button data-id="${cardId}" class="cm-send">Enviar</button>
+        </div>
+      </div>
+      <div class="comments-list" data-id="${cardId}" id="cm-list-${cardId}">
+        <div class="empty">carregando…</div>
+      </div>
+    </details>
+  </div>`;
+}
+
+function cardHtml(r) {
+  const desc = r.desc_html || '<span class="empty-desc">(sem descrição)</span>';
+  const rated = ratings[r.id];
+  const ratedClass = rated ? 'rated' : '';
+  const ratedColor = rated ? RATING_COLORS[rated] : 'transparent';
+  return `<div class="mvp-card ${ratedClass}" style="--rated-color:${ratedColor}">
+    <div class="title"><span>${r.name}</span><span class="id">#${r.id}</span></div>
+    <div class="body">${desc}${dropsHtml(r.mvps)}${scriptHtml(r.script)}</div>
+    ${footerHtml(r)}
+    ${ratingHtml(r)}
+    ${aggregateHtml(r.id)}
+    ${commentsHtml(r.id)}
+  </div>`;
+}
+
+function render() {
+  const start = page * pageSize;
+  const end = Math.min(start + pageSize, cur.length);
+  const slice = cur.slice(start, end);
+  grid.innerHTML = slice.map(cardHtml).join('');
+  pageinfo.textContent = cur.length === 0 ? 'sem resultados' : `mostrando ${start+1}–${end} de ${cur.length}`;
+  document.getElementById('prev').disabled = page === 0;
+  document.getElementById('next').disabled = end >= cur.length;
+}
+
+function apply() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const rf = document.getElementById('rating_filter').value;
+  const sf = document.getElementById('slot_filter').value;
+  const sort = document.getElementById('sort').value;
+  cur = DATA.filter(r => {
+    const rk = ratings[r.id] || '';
+    if (rf === 'unrated' && rk) return false;
+    if (rf === 'rated' && !rk) return false;
+    if (rf && rf !== 'unrated' && rf !== 'rated' && rk !== rf) return false;
+    if (sf && !(r.slots||[]).includes(sf)) return false;
+    if (q) {
+      const mvpsTxt = (r.mvps||[]).map(m => m.name).join(' ');
+      const hay = (r.name+' '+r.aegis+' '+r.desc_text+' '+r.script+' '+r.id+' '+mvpsTxt).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  if (sort === 'name') cur.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sort === 'rate') cur.sort((a,b) => (b.mvps[0]?.rate||0)-(a.mvps[0]?.rate||0));
+  else if (sort === 'mvp_lvl_asc') cur.sort((a,b) => (a.min_lvl||0)-(b.min_lvl||0) || a.id-b.id);
+  else if (sort === 'mvp_lvl_desc') cur.sort((a,b) => (b.min_lvl||0)-(a.min_lvl||0) || a.id-b.id);
+  else if (sort === 'votes_desc') cur.sort((a,b) => {
+    const ta = aggregate[a.id] ? (aggregate[a.id].useless+aggregate[a.id].weak+aggregate[a.id].ok+aggregate[a.id].strong+aggregate[a.id].meta) : 0;
+    const tb = aggregate[b.id] ? (aggregate[b.id].useless+aggregate[b.id].weak+aggregate[b.id].ok+aggregate[b.id].strong+aggregate[b.id].meta) : 0;
+    return tb - ta || a.id - b.id;
+  });
+  else cur.sort((a,b) => a.id - b.id);
+  page = 0;
+  stats.textContent = `${cur.length} / ${DATA.length} cartas`;
+  render();
+}
+
+// ── Event handlers (delegated) ───────────────────────────────
+grid.addEventListener('click', async (e) => {
+  // Rating button
+  const ratingBtn = e.target.closest('.rating button');
+  if (ratingBtn) {
+    const id = parseInt(ratingBtn.dataset.id, 10);
+    const newRating = ratingBtn.dataset.rating;
+    const old = ratings[id];
+
+    if (newRating === '') {
+      // Clear button: only remove if had a vote
+      if (old) { await voteRemove(id, old); delete ratings[id]; }
+    } else if (old === newRating) {
+      // Click same rating again: remove
+      await voteRemove(id, old); delete ratings[id];
+    } else {
+      // Switch or first vote
+      if (old) await voteRemove(id, old);
+      await voteAdd(id, newRating);
+      ratings[id] = newRating;
+    }
+    saveRatings();
+    // Optimistic local update of aggregate counter
+    if (!aggregate[id]) aggregate[id] = {card_id:id,useless:0,weak:0,ok:0,strong:0,meta:0};
+    if (old && aggregate[id][old] > 0) aggregate[id][old]--;
+    if (newRating) aggregate[id][newRating]++;
+    const rf = document.getElementById('rating_filter').value;
+    if (rf) apply(); else render();
+    return;
+  }
+
+  // Send comment button
+  const sendBtn = e.target.closest('.cm-send');
+  if (sendBtn) {
+    const id = parseInt(sendBtn.dataset.id, 10);
+    const nameEl = grid.querySelector(`.cm-name[data-id="${id}"]`);
+    const textEl = grid.querySelector(`.cm-text[data-id="${id}"]`);
+    const content = (textEl.value || '').trim();
+    if (!content) return;
+    sendBtn.disabled = true; sendBtn.textContent = 'enviando…';
+    const ok = await postComment(id, content, nameEl.value);
+    sendBtn.disabled = false; sendBtn.textContent = 'Enviar';
+    if (ok) {
+      textEl.value = ''; nameEl.value = '';
+      const charEl = grid.querySelector(`.cm-charcount[data-id="${id}"]`);
+      if (charEl) charEl.textContent = '0';
+      await loadComments(id);
+      renderCommentsList(id);
+    }
+    return;
+  }
+});
+
+grid.addEventListener('input', (e) => {
+  const t = e.target;
+  if (t.classList.contains('cm-text')) {
+    const id = t.dataset.id;
+    const charEl = grid.querySelector(`.cm-charcount[data-id="${id}"]`);
+    if (charEl) charEl.textContent = t.value.length;
+  }
+});
+
+// Lazy load comments when details is opened
+grid.addEventListener('toggle', async (e) => {
+  const details = e.target;
+  if (details.tagName !== 'DETAILS' || !details.open) return;
+  const list = details.querySelector('.comments-list');
+  if (!list) return;
+  const id = parseInt(list.dataset.id, 10);
+  if (!commentsCache[id]) await loadComments(id);
+  renderCommentsList(id);
+}, true);
+
+function renderCommentsList(id) {
+  const list = document.getElementById(`cm-list-${id}`);
+  if (!list) return;
+  const comments = commentsCache[id] || [];
+  if (!comments.length) { list.innerHTML = '<div class="empty">Nenhum comentário ainda.</div>'; return; }
+  list.innerHTML = comments.map(c => {
+    const who = c.username && c.username.trim() ? c.username : 'Anônimo';
+    const when = new Date(c.created_at).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    const safe = c.content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<div class="item"><div class="meta"><b>${who}</b> · ${when}</div><div>${safe}</div></div>`;
+  }).join('');
+}
+
+// ── Pager + filter handlers ──────────────────────────────────
+document.getElementById('prev').onclick = () => { if (page > 0) { page--; render(); window.scrollTo(0,0); } };
+document.getElementById('next').onclick = () => { const max = Math.ceil(cur.length/pageSize)-1; if (page < max) { page++; render(); window.scrollTo(0,0); } };
+document.getElementById('page_size').onchange = (e) => { pageSize = parseInt(e.target.value); page = 0; render(); };
+['q','rating_filter','slot_filter','sort'].forEach(id => document.getElementById(id).addEventListener('input', apply));
+
+// ── Bootstrap ────────────────────────────────────────────────
+async function bootstrap() {
+  try {
+    const res = await fetch(DATA_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    DATA = await res.json();
+  } catch (err) {
+    showError('Falha ao carregar dados das cartas: ' + err.message);
+    loadingBox.style.display = 'none';
+    return;
+  }
+  await loadAggregate();
+  loadingBox.style.display = 'none';
+  grid.style.display = 'grid';
+  document.getElementById('pager').style.display = 'flex';
+  updateProgress();
+  apply();
+  // Refresh aggregate every 60s
+  setInterval(loadAggregate, POLL_INTERVAL_MS);
+}
+
+bootstrap();
+</script>
