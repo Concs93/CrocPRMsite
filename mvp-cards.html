@@ -150,6 +150,7 @@ permalink: /mvp-cards/
         <option value="mvp_lvl_asc">ordem: lvl MVP (asc)</option>
         <option value="mvp_lvl_desc">ordem: lvl MVP (desc)</option>
         <option value="votes_desc">ordem: mais votadas</option>
+        <option value="comments_desc">ordem: mais comentadas</option>
       </select>
       <select id="page_size">
         <option value="30">30 / página</option>
@@ -192,6 +193,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let DATA = [];                                    // card list
 let aggregate = {};                                // { card_id: {useless,weak,ok,strong,meta} }
 let commentsCache = {};                            // { card_id: [comments] }
+let commentCounts = {};                            // { card_id: int }
 let ratings = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 let cur = [];
 let page = 0;
@@ -228,6 +230,13 @@ async function loadAggregate() {
   for (const row of (data || [])) aggregate[row.card_id] = row;
   // Re-render current page to reflect updated counts
   render();
+}
+
+async function loadCommentCounts() {
+  const { data, error } = await sb.from('mvp_comment_counts').select('*');
+  if (error) return; // silent — non-critical
+  commentCounts = {};
+  for (const row of (data || [])) commentCounts[row.card_id] = row.count;
 }
 
 async function voteAdd(cardId, rating) {
@@ -306,9 +315,11 @@ function aggregateHtml(cardId) {
 }
 
 function commentsHtml(cardId) {
+  const count = commentCounts[cardId] || 0;
+  const label = count > 0 ? `💬 Comentários (${count})` : '💬 Comentários';
   return `<div class="comments">
     <details>
-      <summary>💬 Comentários</summary>
+      <summary>${label}</summary>
       <div class="comments-form">
         <input type="text" placeholder="Seu nome (opcional, vazio = Anônimo)" maxlength="32" data-id="${cardId}" class="cm-name">
         <textarea placeholder="Escreve um comentário (até 500 caracteres)…" maxlength="500" data-id="${cardId}" class="cm-text"></textarea>
@@ -376,6 +387,7 @@ function apply() {
     const tb = aggregate[b.id] ? (aggregate[b.id].useless+aggregate[b.id].weak+aggregate[b.id].ok+aggregate[b.id].strong+aggregate[b.id].meta) : 0;
     return tb - ta || a.id - b.id;
   });
+  else if (sort === 'comments_desc') cur.sort((a,b) => (commentCounts[b.id]||0) - (commentCounts[a.id]||0) || a.id - b.id);
   else cur.sort((a,b) => a.id - b.id);
   page = 0;
   stats.textContent = `${cur.length} / ${DATA.length} cartas`;
@@ -430,6 +442,10 @@ grid.addEventListener('click', async (e) => {
       if (charEl) charEl.textContent = '0';
       await loadComments(id);
       renderCommentsList(id);
+      // Optimistic increment of the count in the summary label
+      commentCounts[id] = (commentCounts[id] || 0) + 1;
+      const summary = grid.querySelector(`.cm-send[data-id="${id}"]`)?.closest('details')?.querySelector('summary');
+      if (summary) summary.textContent = `💬 Comentários (${commentCounts[id]})`;
     }
     return;
   }
@@ -485,14 +501,16 @@ async function bootstrap() {
     loadingBox.style.display = 'none';
     return;
   }
-  await loadAggregate();
+  await Promise.all([loadAggregate(), loadCommentCounts()]);
   loadingBox.style.display = 'none';
   grid.style.display = 'grid';
   document.getElementById('pager').style.display = 'flex';
   updateProgress();
   apply();
-  // Refresh aggregate every 60s
-  setInterval(loadAggregate, POLL_INTERVAL_MS);
+  // Refresh aggregate + comment counts every 60s
+  setInterval(async () => {
+    await Promise.all([loadAggregate(), loadCommentCounts()]);
+  }, POLL_INTERVAL_MS);
 }
 
 bootstrap();
