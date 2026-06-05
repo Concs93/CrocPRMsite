@@ -186,7 +186,6 @@ const RATINGS = ['useless','weak','ok','strong','meta'];
 const RATING_LABELS = {useless:'Useless',weak:'Weak',ok:'Ok',strong:'Strong',meta:'Meta'};
 const RATING_COLORS = {useless:'#6b6b6b',weak:'#b97a3a',ok:'#3a8fb9',strong:'#3aa84a',meta:'#c63ad8'};
 const RATING_ORDER = {useless:0,weak:1,ok:2,strong:3,meta:4};
-const POLL_INTERVAL_MS = 60000;
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -561,12 +560,9 @@ async function bootstrap() {
   document.getElementById('pager').style.display = 'flex';
   updateProgress();
   apply();
-  // Refresh aggregate + comment counts every 60s — SURGICAL update only,
-  // does NOT re-render the whole grid (so in-progress comments aren't wiped).
-  setInterval(async () => {
-    await Promise.all([loadAggregate(), loadCommentCounts()]);
-    updateAggregatesInPlace();
-  }, POLL_INTERVAL_MS);
+  // No auto-polling — page only refreshes data when the user reloads (F5).
+  // Their own votes/comments still update locally on action via optimistic
+  // updates and direct DOM patches, so the UX feels instant.
 }
 
 bootstrap();
