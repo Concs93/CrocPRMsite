@@ -228,8 +228,6 @@ async function loadAggregate() {
   if (error) { showError('Falha ao buscar agregado: ' + error.message); return; }
   aggregate = {};
   for (const row of (data || [])) aggregate[row.card_id] = row;
-  // Re-render current page to reflect updated counts
-  render();
 }
 
 async function loadCommentCounts() {
@@ -340,7 +338,7 @@ function cardHtml(r) {
   const rated = ratings[r.id];
   const ratedClass = rated ? 'rated' : '';
   const ratedColor = rated ? RATING_COLORS[rated] : 'transparent';
-  return `<div class="mvp-card ${ratedClass}" style="--rated-color:${ratedColor}">
+  return `<div class="mvp-card ${ratedClass}" data-card-id="${r.id}" style="--rated-color:${ratedColor}">
     <div class="title"><span>${r.name}</span><span class="id">#${r.id}</span></div>
     <div class="body">${desc}${dropsHtml(r.mvps)}${scriptHtml(r.script)}</div>
     ${footerHtml(r)}
@@ -348,6 +346,52 @@ function cardHtml(r) {
     ${aggregateHtml(r.id)}
     ${commentsHtml(r.id)}
   </div>`;
+}
+
+// Surgical update — only touches .aggregate section + comments summary label.
+// Used by polling to avoid wiping in-progress textarea content.
+function updateAggregatesInPlace() {
+  grid.querySelectorAll('.mvp-card').forEach(cardEl => {
+    const id = parseInt(cardEl.dataset.cardId, 10);
+    if (!id) return;
+    updateSingleCardAggregate(cardEl, id);
+    updateSingleCardCommentCount(cardEl, id);
+  });
+}
+
+function updateSingleCardAggregate(cardEl, id) {
+  const aggEl = cardEl.querySelector('.aggregate');
+  if (!aggEl) return;
+  const tmp = document.createElement('template');
+  tmp.innerHTML = aggregateHtml(id).trim();
+  aggEl.replaceWith(tmp.content.firstElementChild);
+}
+
+function updateSingleCardCommentCount(cardEl, id) {
+  const summary = cardEl.querySelector('.comments > details > summary');
+  if (!summary) return;
+  const count = commentCounts[id] || 0;
+  summary.textContent = count > 0 ? `💬 Comentários (${count})` : '💬 Comentários';
+}
+
+// Update the rating buttons + border color of a single card (after a vote)
+// without re-rendering the whole grid.
+function updateSingleCardRating(id) {
+  const cardEl = grid.querySelector(`.mvp-card[data-card-id="${id}"]`);
+  if (!cardEl) return;
+  // Replace rating row
+  const ratingDiv = cardEl.querySelector('.rating');
+  if (ratingDiv) {
+    const tmp = document.createElement('template');
+    tmp.innerHTML = ratingHtml({id}).trim();
+    ratingDiv.replaceWith(tmp.content.firstElementChild);
+  }
+  // Update border color via CSS variable + class
+  const rated = ratings[id];
+  cardEl.style.setProperty('--rated-color', rated ? RATING_COLORS[rated] : 'transparent');
+  if (rated) cardEl.classList.add('rated'); else cardEl.classList.remove('rated');
+  // Aggregate also changes
+  updateSingleCardAggregate(cardEl, id);
 }
 
 function render() {
@@ -420,8 +464,18 @@ grid.addEventListener('click', async (e) => {
     if (!aggregate[id]) aggregate[id] = {card_id:id,useless:0,weak:0,ok:0,strong:0,meta:0};
     if (old && aggregate[id][old] > 0) aggregate[id][old]--;
     if (newRating) aggregate[id][newRating]++;
+    // Re-render entire grid only when filter/sort might change visibility/position.
+    // Otherwise just update the affected card in place — keeps any open comment
+    // forms intact on OTHER cards (and even this one).
     const rf = document.getElementById('rating_filter').value;
-    if (rf) apply(); else render();
+    const sort = document.getElementById('sort').value;
+    const needsReFilter = !!rf;                           // any rating-based filter
+    const needsReSort   = (sort === 'votes_desc');        // vote total affects order
+    if (needsReFilter || needsReSort) {
+      apply();
+    } else {
+      updateSingleCardRating(id);
+    }
     return;
   }
 
@@ -507,9 +561,11 @@ async function bootstrap() {
   document.getElementById('pager').style.display = 'flex';
   updateProgress();
   apply();
-  // Refresh aggregate + comment counts every 60s
+  // Refresh aggregate + comment counts every 60s — SURGICAL update only,
+  // does NOT re-render the whole grid (so in-progress comments aren't wiped).
   setInterval(async () => {
     await Promise.all([loadAggregate(), loadCommentCounts()]);
+    updateAggregatesInPlace();
   }, POLL_INTERVAL_MS);
 }
 
